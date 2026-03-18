@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Concept two for Joel and Hui Wen's wedding page with a cinematic full-bleed hero."
+    />
+    <title>Joel & Hui Wen — Concept 2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles_2.css" />
+  </head>
+  <body>
+    <main class="page pageCinematic">
+      <header class="hero" aria-label="Wedding introduction">
+        <div class="heroOverlay">
+          <p class="eyebrow">June 2027</p>
+          <h1 class="names">Joel & Hui Wen</h1>
+          <p class="heroCopy">
+            A warm-weather celebration with sun-faded florals, dinner under low lights, and a room full of familiar faces.
+          </p>
+          <p class="eventMeta">
+            <span>19 June 2027</span>
+            <span>7:00 PM</span>
+            <span>Singapore</span>
+          </p>
+        </div>
+      </header>
+
+      <section class="introPanel" aria-labelledby="intro-2-title">
+        <p class="sectionLabel">The mood</p>
+        <h2 id="intro-2-title">Think soft linen, champagne light, and a slow evening pace.</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque, lorem ac aliquam faucibus,
+          mauris risus ultrices justo, vitae efficitur lacus elit in tellus. Mauris elementum dui non odio faucibus.
+        </p>
+      </section>
+
+      <section class="gallerySection" aria-labelledby="gallery-2-title">
+        <div class="sectionHeading">
+          <p class="sectionLabel">Photo gallery</p>
+          <h2 id="gallery-2-title">A filmstrip of references for the atmosphere.</h2>
+        </div>
+        <div class="filmstrip" aria-label="Scrollable gallery">
+          <figure class="frame frameOne">
+            <img src="https://picsum.photos/seed/wed2a/1000/700" alt="Placeholder dinner space" />
+            <figcaption>Warm neutrals, layered textures, unhurried pacing.</figcaption>
+          </figure>
+          <figure class="frame frameTwo">
+            <img src="https://picsum.photos/seed/wed2b/1000/700" alt="Placeholder bouquet close-up" />
+            <figcaption>Botanical details with a slightly sun-bleached finish.</figcaption>
+          </figure>
+          <figure class="frame frameThree">
+            <img src="https://picsum.photos/seed/wed2c/1000/700" alt="Placeholder reception moment" />
+            <figcaption>Space for movement, laughter, and long conversation.</figcaption>
+          </figure>
+          <figure class="frame frameFour">
+            <img src="https://picsum.photos/seed/wed2d/1000/700" alt="Placeholder glassware detail" />
+            <figcaption>Editorial but still grounded and welcoming.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="countdownBanner" aria-labelledby="countdown-2-title">
+        <div>
+          <p class="sectionLabel">Countdown</p>
+          <h2 id="countdown-2-title">Until 19 June 2027, 7:00 PM</h2>
+        </div>
+        <div id="countdown_2" class="countdownMount"></div>
+      </section>
+    </main>
+
+    <script type="module">
+      import { mountCountdown } from "./countdown.js";
+
+      mountCountdown({ root: document.getElementById("countdown_2") });
+    </script>
+  </body>
+</html>

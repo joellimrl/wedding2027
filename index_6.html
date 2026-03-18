@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Concept six for Joel and Hui Wen's wedding page with an enchanted gate reveal, floating hallway sections, a secret map, portraits, and an owl RSVP transition."
+    />
+    <title>Joel & Hui Wen — Concept 6</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles_6.css" />
+  </head>
+  <body>
+    <main class="scene sceneMystic" data-scene>
+      <section class="heroStage" aria-label="Enchanted manor entrance">
+        <div class="mist mistOne" aria-hidden="true"></div>
+        <div class="mist mistTwo" aria-hidden="true"></div>
+        <div class="emberField" aria-hidden="true">
+          <span class="ember"></span>
+          <span class="ember"></span>
+          <span class="ember"></span>
+          <span class="ember"></span>
+          <span class="ember"></span>
+          <span class="ember"></span>
+        </div>
+
+        <div class="stageShell">
+          <div class="hallViewport">
+            <div class="hallBackdrop" aria-hidden="true">
+              <div class="castleSilhouette">
+                <span class="tower towerLeft"></span>
+                <span class="tower towerCenter"></span>
+                <span class="tower towerRight"></span>
+                <span class="bridge"></span>
+              </div>
+              <div class="hallGlow"></div>
+              <div class="heroCopy">
+                <p class="eyebrow">Concept 6</p>
+                <h1 class="names">Joel <span>&</span> Hui Wen</h1>
+                <p class="lede">
+                  Cross the gates into an original candlelit manor, then drift through a hallway of secrets, portraits,
+                  and midnight post.
+                </p>
+                <p class="eventMeta">
+                  <span>19 June 2027</span>
+                  <span>7:00 PM</span>
+                  <span>Singapore</span>
+                </p>
+              </div>
+            </div>
+
+            <button class="gateTrigger" type="button" data-enter-hall aria-controls="floating-hallway map-panel portraits-modal">
+              <span class="gateFrame" aria-hidden="true">
+                <span class="gate gateLeft"></span>
+                <span class="gate gateRight"></span>
+                <span class="gateHandle handleLeft"></span>
+                <span class="gateHandle handleRight"></span>
+              </span>
+              <span class="gatePrompt">Click the gates to enter the hallway</span>
+            </button>
+
+            <div id="floating-hallway" class="floatingHallway" aria-label="Floating hallway options">
+              <div class="floatingCard clockCard">
+                <p class="floatingLabel">Clocktower</p>
+                <h2>The evening begins soon</h2>
+                <p class="floatingBody">Saturday, 19 June 2027 at 7:00 PM, Asia/Singapore</p>
+                <div id="countdown_6" class="countdownMount"></div>
+              </div>
+
+              <button class="floatingCard mapCard" type="button" data-map-trigger>
+                <span class="floatingIcon iconMap" aria-hidden="true"></span>
+                <span class="floatingLabel">Secret map</span>
+                <strong>Left of the hall</strong>
+                <span class="floatingBody">Open the parchment and reveal a dummy route to the venue.</span>
+              </button>
+
+              <button class="floatingCard portraitsCard" type="button" data-portraits-trigger>
+                <span class="floatingIcon iconPortraits" aria-hidden="true"></span>
+                <span class="floatingLabel">Wall of portraits</span>
+                <strong>Right gallery</strong>
+                <span class="floatingBody">Tap to open a placeholder portrait popup for future photos and GIFs.</span>
+              </button>
+
+              <button class="floatingCard owlCard" type="button" data-rsvp-trigger>
+                <span class="floatingIcon iconOwl" aria-hidden="true"></span>
+                <span class="floatingLabel">Owlery</span>
+                <strong>Deliver your reply</strong>
+                <span class="floatingBody">A white owl will take off and carry guests to the RSVP link.</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="overlayLayer" aria-live="polite">
+        <div id="map-panel" class="mapPanel" data-map-panel hidden>
+          <button class="overlayClose" type="button" data-map-close aria-label="Close secret map">Close</button>
+          <div class="mapEnvelope">
+            <div class="mapSeal" aria-hidden="true"></div>
+            <p class="mapIntro">Whisper the phrase and the paper listens.</p>
+            <p class="mapSpell" data-map-spell></p>
+            <div class="mapSheet" data-map-sheet hidden>
+              <div class="mapPath" aria-hidden="true"></div>
+              <div class="mapNode startNode">City stop</div>
+              <div class="mapNode middleNode">Lantern bridge</div>
+              <div class="mapNode venueNode">Celebration hall</div>
+              <div class="mapNotes">
+                <p>Dummy directions: Exit at the nearest station, cross the lantern bridge, and follow the candle markers.</p>
+                <p>Replace this with the real route, parking details, or a drawn venue map later.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="portraits-modal" class="portraitModal" data-portraits-modal hidden>
+          <div class="portraitDialog" role="dialog" aria-modal="true" aria-labelledby="portraits-title">
+            <button class="overlayClose" type="button" data-portraits-close aria-label="Close portrait gallery">Close</button>
+            <p class="galleryLabel">Wall of portraits</p>
+            <h2 id="portraits-title">Placeholder gallery for photos and future GIFs</h2>
+            <div class="galleryGrid">
+              <figure class="galleryCard">
+                <img src="https://picsum.photos/seed/wedding6portrait1/720/900" alt="Placeholder portrait one" />
+                <figcaption>Portrait I</figcaption>
+              </figure>
+              <figure class="galleryCard">
+                <img src="https://picsum.photos/seed/wedding6portrait2/720/900" alt="Placeholder portrait two" />
+                <figcaption>Portrait II</figcaption>
+              </figure>
+              <figure class="galleryCard">
+                <img src="https://picsum.photos/seed/wedding6portrait3/720/900" alt="Placeholder portrait three" />
+                <figcaption>Portrait III</figcaption>
+              </figure>
+              <figure class="galleryCard">
+                <img src="https://picsum.photos/seed/wedding6portrait4/720/900" alt="Placeholder GIF slot" />
+                <figcaption>GIF slot</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="owlOverlay" data-owl-overlay hidden>
+          <div class="owlLoader" aria-hidden="true">
+            <span class="owlBody"></span>
+            <span class="owlWing wingLeft"></span>
+            <span class="owlWing wingRight"></span>
+          </div>
+          <p class="owlText">Dispatching a white owl with your RSVP...</p>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./index_6.js"></script>
+  </body>
+</html>
