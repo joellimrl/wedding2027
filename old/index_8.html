@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Concept eight for Joel and Hui Wen's wedding page with an opening video that transitions into a grand hall backdrop."
+    />
+    <title>Joel & Hui Wen — Concept 8</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles_8.css" />
+  </head>
+  <body>
+    <main class="experience" data-experience>
+      <div class="replayIntroLayer">
+        <button class="replayIntroButton" type="button" data-replay-intro>
+          Replay intro
+        </button>
+      </div>
+
+      <section class="openingScene" data-opening-scene aria-label="Opening scene">
+        <video
+          class="openingVideo"
+          data-opening-video
+          autoplay
+          muted
+          playsinline
+          preload="auto"
+        >
+          <source src="./opening.mp4" type="video/mp4" />
+        </video>
+      </section>
+
+      <section class="mainHall" data-main-hall aria-label="Main hall">
+        <div class="hallBackdrop" aria-hidden="true"></div>
+        <div class="hallOverlay" aria-hidden="true"></div>
+
+        <div class="hallContent">
+          <p class="eyebrow">Concept 8</p>
+          <h1 class="names">Joel <span>&</span> Hui Wen</h1>
+          <p class="lede">The gates open once. After that, guests arrive directly inside the hall.</p>
+          <p class="meta">
+            <span>19 June 2027</span>
+            <span>7:00 PM</span>
+            <span>Singapore</span>
+          </p>
+        </div>
+
+        <div class="hallHotspots" aria-label="Interactive wedding details">
+          <button
+            class="hotspotCard hotspotCountdown"
+            type="button"
+            data-modal-trigger="countdown-modal"
+            aria-controls="countdown-modal"
+          >
+            <span class="hotspotLabel">Countdown</span>
+            <div id="countdown_8" class="countdownMount countdownMountHall"></div>
+          </button>
+
+          <button
+            class="hotspotCard hotspotImageCard hotspotMap"
+            type="button"
+            data-modal-trigger="map-modal"
+            aria-controls="map-modal"
+          >
+            <span class="hotspotLabel">Map</span>
+            <img class="hotspotImage" src="./map.png" alt="Venue map preview" />
+          </button>
+
+          <button
+            class="hotspotCard hotspotImageCard hotspotPortraits"
+            type="button"
+            data-modal-trigger="portraits-modal"
+            aria-controls="portraits-modal"
+          >
+            <span class="hotspotLabel">Portraits</span>
+            <img class="hotspotImage" src="./portraits_sample.jpeg" alt="Portrait gallery preview" />
+          </button>
+
+          <button
+            class="hotspotCard hotspotImageCard hotspotRsvp"
+            type="button"
+            data-modal-trigger="rsvp-modal"
+            aria-controls="rsvp-modal"
+          >
+            <span class="hotspotLabel">RSVP</span>
+            <img class="hotspotImage" src="./rsvp.png" alt="RSVP card preview" />
+          </button>
+        </div>
+      </section>
+
+      <section class="overlayLayer" aria-live="polite">
+        <div id="countdown-modal" class="popupOverlay" data-popup="countdown-modal" hidden>
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="countdown-modal-title">
+            <button class="overlayClose" type="button" data-popup-close aria-label="Close countdown popup">Close</button>
+            <p id="countdown-modal-title" class="popupTitle">Countdown</p>
+            <div class="popupSurface" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div id="map-modal" class="popupOverlay" data-popup="map-modal" hidden>
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="map-modal-title">
+            <button class="overlayClose" type="button" data-popup-close aria-label="Close map popup">Close</button>
+            <p id="map-modal-title" class="popupTitle">Map</p>
+            <div class="popupSurface" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div id="portraits-modal" class="popupOverlay" data-popup="portraits-modal" hidden>
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="portraits-modal-title">
+            <button class="overlayClose" type="button" data-popup-close aria-label="Close portraits popup">Close</button>
+            <p id="portraits-modal-title" class="popupTitle">Portraits</p>
+            <div class="popupSurface" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div id="rsvp-modal" class="popupOverlay" data-popup="rsvp-modal" hidden>
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="rsvp-modal-title">
+            <button class="overlayClose" type="button" data-popup-close aria-label="Close RSVP popup">Close</button>
+            <p id="rsvp-modal-title" class="popupTitle">RSVP</p>
+            <div class="popupSurface" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./index_8.js"></script>
+  </body>
+</html>

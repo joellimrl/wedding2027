@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Concept three for Joel and Hui Wen's wedding page with a botanical invitation feel."
+    />
+    <title>Joel & Hui Wen — Concept 3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Forum&family=Instrument+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles_3.css" />
+  </head>
+  <body>
+    <main class="page pageBotanical">
+      <header class="hero" aria-label="Wedding introduction">
+        <div class="heroInner">
+          <p class="eyebrow">For one summer evening</p>
+          <h1 class="names">Joel & Hui Wen</h1>
+          <p class="heroCopy">
+            Join us for an evening shaped by garden greens, oat-toned textures, candlelight, and dinner that lingers.
+          </p>
+          <div class="heroRule" aria-hidden="true"></div>
+          <p class="eventMeta">
+            <span>Saturday, 19 June 2027</span>
+            <span>7:00 PM</span>
+            <span>Singapore</span>
+          </p>
+        </div>
+      </header>
+
+      <section class="introCard" aria-labelledby="intro-3-title">
+        <p class="sectionLabel">Invitation note</p>
+        <h2 id="intro-3-title">A softer, more botanical interpretation of the same celebration.</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id pulvinar risus. Integer convallis lorem at
+          quam rhoncus, quis pellentesque tortor varius. Proin ultricies ligula vitae justo facilisis, a vulputate ex
+          fermentum.
+        </p>
+      </section>
+
+      <section class="galleryCard" aria-labelledby="gallery-3-title">
+        <div class="sectionHeading">
+          <p class="sectionLabel">Gallery</p>
+          <h2 id="gallery-3-title">Reference images for the flowers, tableware, and feeling.</h2>
+        </div>
+        <div class="thumbRail" aria-label="Scrollable gallery">
+          <figure class="thumbItem">
+            <img src="https://picsum.photos/seed/wed3a/800/800" alt="Placeholder floral arrangement" />
+            <figcaption>Botanical textures and a little asymmetry.</figcaption>
+          </figure>
+          <figure class="thumbItem">
+            <img src="https://picsum.photos/seed/wed3b/800/800" alt="Placeholder invitation flat lay" />
+            <figcaption>Paper goods with delicate contrast and negative space.</figcaption>
+          </figure>
+          <figure class="thumbItem">
+            <img src="https://picsum.photos/seed/wed3c/800/800" alt="Placeholder venue detail" />
+            <figcaption>Natural stone, linen, and warm ambient light.</figcaption>
+          </figure>
+          <figure class="thumbItem">
+            <img src="https://picsum.photos/seed/wed3d/800/800" alt="Placeholder dinner scene" />
+            <figcaption>Elegant without becoming too polished or rigid.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="countdownCard" aria-labelledby="countdown-3-title">
+        <p class="sectionLabel">Countdown</p>
+        <h2 id="countdown-3-title">Until the doors open on 19 June 2027, 7:00 PM</h2>
+        <div id="countdown_3" class="countdownMount"></div>
+      </section>
+    </main>
+
+    <script type="module">
+      import { mountCountdown } from "../countdown.js";
+
+      mountCountdown({ root: document.getElementById("countdown_3") });
+    </script>
+  </body>
+</html>

@@ -13,6 +13,7 @@ Minimal static wedding site intended for GitHub Pages.
 - `index_5.html` + `styles_5.css`: Animated orbital stage concept with more theatrical motion
 - `index_6.html` + `styles_6.css` + `index_6.js`: Enchanted manor concept with a gate reveal, floating hallway objects, a secret map, portrait popup, and owl RSVP transition
 - `index_7.html` + `styles_7.css` + `index_7.js`: Gate-only cinematic landing concept with a smooth click-to-open entrance into a castle interior
+- `index_8.html` + `styles_8.css` + `index_8.js`: Opening-film concept that plays `opening.mp4` once, then transitions into `hall.png` and skips the video on refresh
 - `countdown.js`: Shared countdown utility reused by multiple alternate concepts
 
 `index.html` now acts as a landing page linking to all concept files.
@@ -28,6 +29,7 @@ Open any of these directly in your browser to compare concepts:
 - `index_5.html`
 - `index_6.html`
 - `index_7.html`
+- `index_8.html`
 
 The concept pages include shared essentials such as:
 
