@@ -7,6 +7,7 @@ const mainHall = document.querySelector("[data-main-hall]");
 const replayIntroLayer = document.querySelector(".replayIntroLayer");
 const replayIntroButton = document.querySelector("[data-replay-intro]");
 const countdownRoot = document.getElementById("countdown");
+const countdownPopup = document.querySelector('[data-popup="countdown-modal"]');
 const modalTriggers = document.querySelectorAll("[data-modal-trigger]");
 const popups = document.querySelectorAll("[data-popup]");
 const popupCloseButtons = document.querySelectorAll("[data-popup-close]");
@@ -17,6 +18,14 @@ const mapBlankStage = document.querySelector("[data-map-blank-stage]");
 const mapSpellSvg = document.querySelector("[data-map-spell-svg]");
 const mapLineTexts = Array.from(document.querySelectorAll("[data-map-line-text]"));
 const mapQuill = document.querySelector("[data-map-quill]");
+const specialClock = document.querySelector("[data-special-clock]");
+const clockLabels = Array.from(document.querySelectorAll("[data-clock-place]"));
+const hwClockHand = document.querySelector('[data-clock-hand="hw"]');
+const joelClockHand = document.querySelector('[data-clock-hand="joel"]');
+const hwClockStatus = document.querySelector('[data-clock-status="hw"]');
+const joelClockStatus = document.querySelector('[data-clock-status="joel"]');
+const hwClockNote = document.querySelector('[data-clock-note="hw"]');
+const joelClockNote = document.querySelector('[data-clock-note="joel"]');
 
 const INTRO_STORAGE_KEY = "wedding2027-home-opening-played";
 const MAP_STORAGE_KEY = "wedding2027-map-opening-played";
@@ -25,6 +34,40 @@ const MAP_REVEAL_DURATION = 2880;
 const MAP_BLANK_DELAY = 800;
 const MAP_QUILL_OFFSET_X = 18;
 const MAP_QUILL_OFFSET_Y = 46;
+const CLOCK_CYCLE_INTERVAL_MIN = 2000;
+const CLOCK_CYCLE_INTERVAL_MAX = 2500;
+const CLOCK_FACE_ANGLES = {
+  work: 0,
+  gym: 60,
+  yoga: 120,
+  toilet: 180,
+  bed: 240,
+  desk: 300,
+};
+const HW_CLOCK_ROUTE = [
+  { name: "Work", slug: "work" },
+  { name: "Gym", slug: "gym" },
+  { name: "Yoga", slug: "yoga" },
+  { name: "Bed", slug: "bed" },
+];
+const JOEL_CLOCK_ROUTE = [
+  { name: "Work", slug: "work" },
+  { name: "Toilet", slug: "toilet" },
+  { name: "Bed", slug: "bed" },
+  { name: "Desk", slug: "desk" },
+];
+const HW_CLOCK_NOTES = {
+  work: "6am up at at em",
+  gym: "💪💪🔥🔥",
+  yoga: "Namaste",
+  bed: "Nuaaaaaaaa",
+};
+const JOEL_CLOCK_NOTES = {
+  work: "9am still not up",
+  toilet: "Full of crap",
+  desk: "Gaming. Losing. Crying.",
+  bed: "Snoreeeeeee",
+};
 
 mountCountdown({ root: countdownRoot });
 
@@ -33,6 +76,10 @@ let mapAnimationFrameId = null;
 let mapBlankTimeoutId = null;
 let mapRevealStartedAt = 0;
 let mapLineMetrics = [];
+let hwClockTimeoutId = null;
+let joelClockTimeoutId = null;
+let activeHwClockIndex = 0;
+let activeJoelClockIndex = 0;
 
 function updateReplayIntroVisibility() {
   if (!replayIntroLayer) {
@@ -296,6 +343,103 @@ function clearMapRevealTimers() {
   clearMapBlankTimeout();
 }
 
+function updateClockLabelHighlights(hwLocationSlug, joelLocationSlug) {
+  clockLabels.forEach((label) => {
+    const isHwActive = label.dataset.clockPlace === hwLocationSlug;
+    const isJoelActive = label.dataset.clockPlace === joelLocationSlug;
+
+    label.classList.toggle("is-hw-active", isHwActive);
+    label.classList.toggle("is-joel-active", isJoelActive);
+  });
+}
+
+function setClockLocations(hwLocationIndex, joelLocationIndex) {
+  if (!specialClock || !hwClockHand || !joelClockHand) {
+    return;
+  }
+
+  const hwLocation = HW_CLOCK_ROUTE[hwLocationIndex] ?? HW_CLOCK_ROUTE[0];
+  const joelLocation = JOEL_CLOCK_ROUTE[joelLocationIndex] ?? JOEL_CLOCK_ROUTE[0];
+  const hwAngle = CLOCK_FACE_ANGLES[hwLocation.slug] ?? 0;
+  const joelAngle = CLOCK_FACE_ANGLES[joelLocation.slug] ?? 0;
+
+  activeHwClockIndex = hwLocationIndex;
+  activeJoelClockIndex = joelLocationIndex;
+  specialClock.dataset.hwLocation = hwLocation.slug;
+  specialClock.dataset.joelLocation = joelLocation.slug;
+  hwClockHand.style.setProperty("--clock-hand-angle", `${hwAngle}deg`);
+  joelClockHand.style.setProperty("--clock-hand-angle", `${joelAngle}deg`);
+  updateClockLabelHighlights(hwLocation.slug, joelLocation.slug);
+
+  if (hwClockStatus) {
+    hwClockStatus.textContent = hwLocation.name;
+  }
+
+  if (hwClockNote) {
+    hwClockNote.textContent = HW_CLOCK_NOTES[hwLocation.slug] ?? "";
+  }
+
+  if (joelClockStatus) {
+    joelClockStatus.textContent = joelLocation.name;
+  }
+
+  if (joelClockNote) {
+    joelClockNote.textContent = JOEL_CLOCK_NOTES[joelLocation.slug] ?? "";
+  }
+}
+
+function getRandomClockDelay() {
+  return Math.round(
+    CLOCK_CYCLE_INTERVAL_MIN + Math.random() * (CLOCK_CYCLE_INTERVAL_MAX - CLOCK_CYCLE_INTERVAL_MIN),
+  );
+}
+
+function clearClockTimers() {
+  if (hwClockTimeoutId !== null) {
+    window.clearTimeout(hwClockTimeoutId);
+    hwClockTimeoutId = null;
+  }
+
+  if (joelClockTimeoutId !== null) {
+    window.clearTimeout(joelClockTimeoutId);
+    joelClockTimeoutId = null;
+  }
+}
+
+function scheduleHwClockTick() {
+  hwClockTimeoutId = window.setTimeout(() => {
+    const nextHwIndex = (activeHwClockIndex + 1) % HW_CLOCK_ROUTE.length;
+
+    setClockLocations(nextHwIndex, activeJoelClockIndex);
+    scheduleHwClockTick();
+  }, getRandomClockDelay());
+}
+
+function scheduleJoelClockTick() {
+  joelClockTimeoutId = window.setTimeout(() => {
+    const nextJoelClockIndex = (activeJoelClockIndex + 1) % JOEL_CLOCK_ROUTE.length;
+
+    setClockLocations(activeHwClockIndex, nextJoelClockIndex);
+    scheduleJoelClockTick();
+  }, getRandomClockDelay());
+}
+
+function startClockAnimation() {
+  if (!specialClock || !hwClockHand || !joelClockHand) {
+    return;
+  }
+
+  clearClockTimers();
+  setClockLocations(0, 0);
+  scheduleHwClockTick();
+  scheduleJoelClockTick();
+}
+
+function stopClockAnimation() {
+  clearClockTimers();
+  setClockLocations(0, 0);
+}
+
 function completeMapReveal() {
   clearMapAnimationFrame();
   updateMapRevealProgress(1);
@@ -403,9 +547,21 @@ function handleMapPopupClose() {
   resetMapRevealState();
 }
 
+function handleCountdownPopupOpen() {
+  startClockAnimation();
+}
+
+function handleCountdownPopupClose() {
+  stopClockAnimation();
+}
+
 function closePopup(popup = activePopup) {
   if (!popup) {
     return;
+  }
+
+  if (popup === countdownPopup) {
+    handleCountdownPopupClose();
   }
 
   if (popup === mapPopup) {
@@ -432,6 +588,10 @@ function openPopup(popupName) {
 
   popup.hidden = false;
   activePopup = popup;
+
+  if (popup === countdownPopup) {
+    handleCountdownPopupOpen();
+  }
 
   if (popup === mapPopup) {
     handleMapPopupOpen();

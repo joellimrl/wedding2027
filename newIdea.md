@@ -12,6 +12,7 @@ Owlery below - Clicking will show a loading screen which is a white owl flying, 
 
 mobile should have map and portrait side by side cuz its vertical
 
+music option at the top right
 
 Video prompt for opening scene:
 Something similar to harry potter hogwarts, i want the opening to be the gates to the castle with the castle visible in the background.
