@@ -68,6 +68,12 @@ body {
   pointer-events: none;
 }
 
+.replayIntroLayer.is-hidden-on-mobile-scroll {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .openingScene,
 .mainHall {
   position: absolute;
@@ -543,6 +549,7 @@ body {
     right: 0;
     padding: 14px 18px 0;
     z-index: 3;
+    transition: opacity 180ms ease, visibility 180ms ease;
   }
 
   .replayIntroButton {

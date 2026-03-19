@@ -3,6 +3,8 @@ import { mountCountdown } from "./countdown.js";
 const experience = document.querySelector("[data-experience]");
 const openingScene = document.querySelector("[data-opening-scene]");
 const openingVideo = document.querySelector("[data-opening-video]");
+const mainHall = document.querySelector("[data-main-hall]");
+const replayIntroLayer = document.querySelector(".replayIntroLayer");
 const replayIntroButton = document.querySelector("[data-replay-intro]");
 const countdownRoot = document.getElementById("countdown");
 const modalTriggers = document.querySelectorAll("[data-modal-trigger]");
@@ -15,6 +17,17 @@ mountCountdown({ root: countdownRoot });
 
 let activePopup = null;
 
+function updateReplayIntroVisibility() {
+  if (!replayIntroLayer) {
+    return;
+  }
+
+  const shouldHideOnMobile =
+    window.matchMedia("(max-width: 640px)").matches && (mainHall?.scrollTop ?? 0) > 0;
+
+  replayIntroLayer.classList.toggle("is-hidden-on-mobile-scroll", shouldHideOnMobile);
+}
+
 function setIntroPlayingState(isPlaying) {
   experience?.classList.toggle("is-intro-playing", isPlaying);
 }
@@ -23,6 +36,7 @@ function showMainHall() {
   setIntroPlayingState(false);
   experience?.classList.add("is-ready", "is-complete");
   openingScene?.setAttribute("aria-hidden", "true");
+  updateReplayIntroVisibility();
 }
 
 function markOpeningAsPlayed() {
@@ -117,6 +131,8 @@ function replayIntro() {
   closePopup();
   clearOpeningPlayed();
   setIntroPlayingState(true);
+  mainHall?.scrollTo({ top: 0, behavior: "auto" });
+  updateReplayIntroVisibility();
   openingVideo.currentTime = 0;
   playOpeningSequence();
 }
@@ -136,6 +152,8 @@ if (hasOpeningPlayed()) {
 }
 
 replayIntroButton?.addEventListener("click", replayIntro);
+mainHall?.addEventListener("scroll", updateReplayIntroVisibility, { passive: true });
+window.addEventListener("resize", updateReplayIntroVisibility);
 modalTriggers.forEach((trigger) => {
   trigger.addEventListener("click", () => {
     openPopup(trigger.dataset.modalTrigger);
@@ -157,3 +175,4 @@ popups.forEach((popup) => {
 });
 
 window.addEventListener("keydown", handleGlobalKeydown);
+updateReplayIntroVisibility();
