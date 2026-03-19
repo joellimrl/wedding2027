@@ -332,8 +332,8 @@ body {
   position: fixed;
   inset: 0;
   display: grid;
-  place-items: center;
-  padding: 24px;
+  place-items: stretch;
+  padding: 0;
   background: rgba(10, 7, 5, 0.58);
   backdrop-filter: blur(10px);
 }
@@ -344,48 +344,37 @@ body {
 
 .popupDialog {
   position: relative;
-  width: min(640px, 100%);
-  min-height: min(360px, 80vh);
-  padding: 66px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  padding: 84px 32px 32px;
   border: 1px solid rgba(248, 229, 196, 0.18);
   background:
     linear-gradient(180deg, rgba(30, 21, 16, 0.94), rgba(13, 9, 7, 0.96)),
     rgba(12, 8, 6, 0.96);
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
-  align-self: center;
-  justify-self: center;
+  overflow: auto;
 }
 
 #countdown-modal .popupDialog {
-  width: min(540px, calc(100% - 140px));
-  min-height: 240px;
-  align-self: start;
-  justify-self: center;
-  margin-top: 24px;
+  width: 100%;
+  min-height: 100vh;
 }
 
 #map-modal .popupDialog {
-  width: min(360px, calc(50vw - 96px));
-  min-height: 280px;
-  align-self: center;
-  justify-self: start;
-  margin-left: 28px;
+  width: 100%;
+  min-height: 100vh;
 }
 
 #portraits-modal .popupDialog {
-  width: min(360px, calc(50vw - 96px));
-  min-height: 280px;
-  align-self: center;
-  justify-self: end;
-  margin-right: 28px;
+  width: 100%;
+  min-height: 100vh;
 }
 
 #rsvp-modal .popupDialog {
-  width: min(320px, calc(100% - 40px));
-  min-height: 220px;
-  align-self: end;
-  justify-self: center;
-  margin-bottom: 24px;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .overlayClose {
@@ -418,7 +407,8 @@ body {
 }
 
 .popupSurface {
-  min-height: min(240px, calc(80vh - 120px));
+  flex: 1;
+  min-height: 0;
   border: 1px dashed rgba(248, 229, 196, 0.16);
   background:
     radial-gradient(circle at top, rgba(248, 229, 196, 0.08), transparent 52%),
@@ -426,16 +416,117 @@ body {
 }
 
 #countdown-modal .popupSurface {
-  min-height: 180px;
+  min-height: 0;
 }
 
 #map-modal .popupSurface,
 #portraits-modal .popupSurface {
-  min-height: 220px;
+  min-height: 0;
+}
+
+#map-modal .popupSurface {
+  position: relative;
+  overflow: hidden;
+}
+
+.replayMapButton {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 1;
+  border: 1px solid rgba(248, 229, 196, 0.28);
+  padding: 10px 14px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(18, 12, 9, 0.58);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.replayMapButton:hover {
+  background: rgba(31, 21, 16, 0.78);
+  border-color: rgba(248, 229, 196, 0.42);
+  transform: translateY(-1px);
+}
+
+.replayMapButton:focus-visible {
+  outline: 2px solid rgba(248, 229, 196, 0.72);
+  outline-offset: 2px;
+}
+
+.mapPopupSurface {
+  display: grid;
+}
+
+.mapWritingStage,
+.mapBlankStage {
+  min-height: inherit;
+}
+
+.mapWritingStage {
+  display: grid;
+  place-items: center;
+  padding: 22px;
+}
+
+.mapWritingContainer {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  min-height: 200px;
+  padding: 44px 18px 18px;
+}
+
+.mapSpellSvg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.mapSpellLineText {
+  --map-fill-opacity: 0;
+  fill: rgba(232, 216, 168, 0.2);
+  fill-opacity: var(--map-fill-opacity);
+  stroke: rgba(248, 229, 196, 0.94);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 44px;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  paint-order: stroke fill;
+  text-anchor: middle;
+  stroke-dasharray: 2400;
+  stroke-dashoffset: 2400;
+}
+
+.mapQuill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 56px;
+  pointer-events: none;
+  transform-origin: 18px 46px;
+  will-change: transform;
+}
+
+.mapBlankStage {
+  background: transparent;
+}
+
+.mapBlankStage[hidden],
+.mapWritingStage[hidden] {
+  display: none;
 }
 
 #rsvp-modal .popupSurface {
-  min-height: 140px;
+  min-height: 0;
 }
 
 @keyframes hotspotWiggle {
@@ -616,16 +707,38 @@ body {
   }
 
   .popupOverlay {
-    padding: 16px;
+    padding: 0;
+  }
+
+  #map-modal .popupDialog {
+    width: 100%;
+  }
+
+  .replayMapButton,
+  .overlayClose {
+    padding: 10px 12px;
+    font-size: 0.68rem;
+  }
+
+  .mapWritingStage {
+    padding: 18px 14px;
+  }
+
+  .mapWritingContainer {
+    min-height: 170px;
+    padding: 42px 10px 16px;
+  }
+
+  .mapSpellLineText {
+    font-size: 34px;
+    stroke-width: 1.5;
   }
 
   .popupDialog {
-    min-height: 320px;
-    padding: 60px 18px 18px;
+    min-height: 100vh;
+    padding: 72px 18px 18px;
     width: 100%;
     margin: 0;
-    align-self: center;
-    justify-self: center;
   }
 
   #countdown-modal .popupDialog,
@@ -633,17 +746,15 @@ body {
   #portraits-modal .popupDialog,
   #rsvp-modal .popupDialog {
     width: 100%;
-    min-height: 320px;
+    min-height: 100vh;
     margin: 0;
-    align-self: center;
-    justify-self: center;
   }
 
   #countdown-modal .popupSurface,
   #map-modal .popupSurface,
   #portraits-modal .popupSurface,
   #rsvp-modal .popupSurface {
-    min-height: 220px;
+    min-height: 0;
   }
 
   .meta {

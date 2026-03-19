@@ -10,8 +10,7 @@ Weasley clock at the top - Doesnt require clicking, it will show the date and ti
 Wall of portraits on the right - Clicking will show a gallery popup (this will contain pictures and gifs of us, todo later so put placeholder images for now)
 Owlery below - Clicking will show a loading screen which is a white owl flying, then links to the RSVP (put a dummy link for now)
 
-When hover over any of these, should have some small animation with lift
-
+mobile should have map and portrait side by side cuz its vertical
 
 
 Video prompt for opening scene:
