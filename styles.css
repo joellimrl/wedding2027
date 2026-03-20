@@ -212,42 +212,27 @@ body {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  border: 1px solid rgba(248, 229, 196, 0.18);
-  background: rgba(19, 13, 10, 0.72);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   color: var(--ink);
   font: inherit;
   text-align: left;
   cursor: pointer;
-  backdrop-filter: blur(12px);
+  padding: 0;
+  backdrop-filter: none;
+  appearance: none;
   transform: var(--base-transform);
-  transition:
-    border-color 180ms ease,
-    background 180ms ease,
-    box-shadow 180ms ease,
-    filter 180ms ease;
-}
-
-.hotspotCard:hover,
-.hotspotCard:focus-visible {
-  border-color: rgba(248, 229, 196, 0.42);
-  background: rgba(30, 21, 16, 0.84);
-  box-shadow: 0 30px 84px rgba(0, 0, 0, 0.3);
-  animation: hotspotWiggle 420ms ease-in-out 1;
+  transition: filter 180ms ease;
 }
 
 .hotspotCard:focus-visible {
   outline: 2px solid rgba(248, 229, 196, 0.74);
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
 .hotspotLabel {
-  display: block;
-  margin-bottom: 12px;
-  font-size: 0.74rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(247, 239, 226, 0.72);
+  display: none;
 }
 
 .hotspotCountdown {
@@ -255,6 +240,17 @@ body {
   justify-self: center;
   width: min(100%, var(--desktop-center-card-width));
   padding: 18px;
+  border: 1px solid rgba(248, 229, 196, 0.18);
+  background: rgba(19, 13, 10, 0.72);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(12px);
+}
+
+.hotspotCountdown:hover,
+.hotspotCountdown:focus-visible {
+  border-color: rgba(248, 229, 196, 0.42);
+  background: rgba(30, 21, 16, 0.84);
+  box-shadow: 0 30px 84px rgba(0, 0, 0, 0.3);
 }
 
 .countdownMountHall {
@@ -269,11 +265,9 @@ body {
 
 .countdownUnit,
 .countdownComplete {
-  padding: 14px 10px;
-  border: 1px solid rgba(248, 229, 196, 0.14);
-  background:
-    linear-gradient(180deg, rgba(255, 243, 219, 0.12), rgba(255, 243, 219, 0.04)),
-    rgba(10, 7, 5, 0.54);
+  padding: 0;
+  border: 0;
+  background: transparent;
   text-align: center;
 }
 
@@ -297,7 +291,7 @@ body {
 
 .hotspotImageCard {
   width: min(100%, var(--desktop-side-card-width));
-  padding: 14px;
+  padding: 0;
 }
 
 .hotspotMap {
@@ -320,7 +314,7 @@ body {
   height: auto;
   max-height: min(34vh, 300px);
   object-fit: contain;
-  border: 1px solid rgba(248, 229, 196, 0.14);
+  border: 0;
 }
 
 .overlayLayer {
@@ -863,7 +857,7 @@ body {
   }
 
   .hotspotImageCard {
-    padding: 12px;
+    padding: 0;
   }
 
   .hotspotImage {
