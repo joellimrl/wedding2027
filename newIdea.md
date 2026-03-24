@@ -10,12 +10,20 @@ Weasley clock at the top - Doesnt require clicking, it will show the date and ti
 Wall of portraits on the right - Clicking will show a gallery popup (this will contain pictures and gifs of us, todo later so put placeholder images for now)
 Owlery below - Clicking will show a loading screen which is a white owl flying, then links to the RSVP (put a dummy link for now)
 
-mobile should have map and portrait side by side cuz its vertical
-
-music option at the top right
-
 Video prompt for opening scene:
 Something similar to harry potter hogwarts, i want the opening to be the gates to the castle with the castle visible in the background.
 After a second, the gates swing open outwards and the perspective zooms all the way in to the castle interior, going by the gardens are super fast
 The setting should be dark in the evening, but with plenty of stars in the night sky
 There should be floating things like dementors and ghosts around that are not clearly visible but still obvious enough
+
+maybe can create the map as a video instead
+
+TODO:
+- tally form can redirect to this site (and see if i want to use cloudflare pages or not)
+- tally to connect to google sheets (work laptop cant, try at home)
+- tally cant send email to recipients, need to manual send (reminders etc.)
+- add jitter to hover on popups
+- move countdown to middle, add clock?
+- add in gallery (change photo also)
+- mobile should have map and portrait side by side cuz its vertical
+- add music and music option at the top right

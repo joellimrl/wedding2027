@@ -12,7 +12,11 @@ const modalTriggers = document.querySelectorAll("[data-modal-trigger]");
 const popups = document.querySelectorAll("[data-popup]");
 const popupCloseButtons = document.querySelectorAll("[data-popup-close]");
 const mapPopup = document.querySelector('[data-popup="map-modal"]');
+const rsvpPopup = document.querySelector('[data-popup="rsvp-modal"]');
 const replayMapButton = document.querySelector("[data-replay-map]");
+const mapTrigger = document.querySelector('[data-modal-trigger="map-modal"]');
+const mapSurface = document.querySelector("[data-map-surface]");
+const mapIntroStage = document.querySelector("[data-map-intro-stage]");
 const mapWritingStage = document.querySelector("[data-map-writing-stage]");
 const mapBlankStage = document.querySelector("[data-map-blank-stage]");
 const mapSpellSvg = document.querySelector("[data-map-spell-svg]");
@@ -30,10 +34,12 @@ const joelClockNote = document.querySelector('[data-clock-note="joel"]');
 const INTRO_STORAGE_KEY = "wedding2027-home-opening-played";
 const MAP_STORAGE_KEY = "wedding2027-map-opening-played";
 const MAP_STROKE_DASH = 2400;
+const MAP_INTRO_DURATION = 1420;
 const MAP_REVEAL_DURATION = 2880;
 const MAP_BLANK_DELAY = 800;
 const MAP_QUILL_OFFSET_X = 18;
 const MAP_QUILL_OFFSET_Y = 46;
+const TALLY_EMBED_SCRIPT = "https://tally.so/widgets/embed.js";
 const CLOCK_CYCLE_INTERVAL_MIN = 2000;
 const CLOCK_CYCLE_INTERVAL_MAX = 2500;
 const CLOCK_FACE_ANGLES = {
@@ -74,12 +80,67 @@ mountCountdown({ root: countdownRoot });
 let activePopup = null;
 let mapAnimationFrameId = null;
 let mapBlankTimeoutId = null;
+let mapIntroTimeoutId = null;
 let mapRevealStartedAt = 0;
 let mapLineMetrics = [];
 let hwClockTimeoutId = null;
 let joelClockTimeoutId = null;
 let activeHwClockIndex = 0;
 let activeJoelClockIndex = 0;
+let tallyEmbedLoadPromise = null;
+
+function loadTallyEmbeds() {
+  if (typeof window.Tally !== "undefined") {
+    window.Tally.loadEmbeds();
+    return Promise.resolve();
+  }
+
+  if (tallyEmbedLoadPromise) {
+    return tallyEmbedLoadPromise;
+  }
+
+  tallyEmbedLoadPromise = new Promise((resolve) => {
+    const existingScript = document.querySelector(`script[src="${TALLY_EMBED_SCRIPT}"]`);
+
+    if (existingScript) {
+      existingScript.addEventListener(
+        "load",
+        () => {
+          window.Tally?.loadEmbeds();
+          resolve();
+        },
+        { once: true },
+      );
+      existingScript.addEventListener(
+        "error",
+        () => {
+          document.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((embed) => {
+            embed.src = embed.dataset.tallySrc;
+          });
+          resolve();
+        },
+        { once: true },
+      );
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = TALLY_EMBED_SCRIPT;
+    script.onload = () => {
+      window.Tally?.loadEmbeds();
+      resolve();
+    };
+    script.onerror = () => {
+      document.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((embed) => {
+        embed.src = embed.dataset.tallySrc;
+      });
+      resolve();
+    };
+    document.body.appendChild(script);
+  });
+
+  return tallyEmbedLoadPromise;
+}
 
 function updateReplayIntroVisibility() {
   if (!replayIntroLayer) {
@@ -163,6 +224,66 @@ function clearMapBlankTimeout() {
     window.clearTimeout(mapBlankTimeoutId);
     mapBlankTimeoutId = null;
   }
+}
+
+function clearMapIntroTimeout() {
+  if (mapIntroTimeoutId !== null) {
+    window.clearTimeout(mapIntroTimeoutId);
+    mapIntroTimeoutId = null;
+  }
+}
+
+function getMapIntroDuration() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return 0;
+  }
+
+  return MAP_INTRO_DURATION;
+}
+
+function setMapIntroMotionOrigin() {
+  if (!mapSurface) {
+    return;
+  }
+
+  const surfaceBounds = mapSurface.getBoundingClientRect();
+
+  if (!surfaceBounds.width || !surfaceBounds.height) {
+    return;
+  }
+
+  if (!mapTrigger) {
+    mapSurface.style.setProperty("--map-intro-origin-x", "0px");
+    mapSurface.style.setProperty("--map-intro-origin-y", "18vh");
+    mapSurface.style.setProperty("--map-intro-origin-scale", "0.28");
+    return;
+  }
+
+  const triggerBounds = mapTrigger.getBoundingClientRect();
+  const surfaceCenterX = surfaceBounds.left + surfaceBounds.width / 2;
+  const surfaceCenterY = surfaceBounds.top + surfaceBounds.height / 2;
+  const triggerCenterX = triggerBounds.left + triggerBounds.width / 2;
+  const triggerCenterY = triggerBounds.top + triggerBounds.height / 2;
+  const introWidth = Math.min(Math.max(surfaceBounds.width - 48, 320), 880);
+  const introHeight = introWidth / 1.68;
+  const originScale = Math.min(
+    Math.max(Math.min(triggerBounds.width / introWidth, triggerBounds.height / introHeight), 0.16),
+    0.42,
+  );
+
+  mapSurface.style.setProperty("--map-intro-origin-x", `${triggerCenterX - surfaceCenterX}px`);
+  mapSurface.style.setProperty("--map-intro-origin-y", `${triggerCenterY - surfaceCenterY}px`);
+  mapSurface.style.setProperty("--map-intro-origin-scale", `${originScale}`);
+}
+
+function setMapSurfaceState(state) {
+  if (!mapSurface) {
+    return;
+  }
+
+  mapSurface.classList.toggle("is-map-intro-active", state === "intro");
+  mapSurface.classList.toggle("is-map-writing-active", state === "writing");
+  mapSurface.classList.toggle("is-map-blank-active", state === "blank");
 }
 
 function setMapLineStrokeProgress(lineText, progress) {
@@ -341,6 +462,7 @@ function updateMapRevealProgress(progress) {
 function clearMapRevealTimers() {
   clearMapAnimationFrame();
   clearMapBlankTimeout();
+  clearMapIntroTimeout();
 }
 
 function updateClockLabelHighlights(hwLocationSlug, joelLocationSlug) {
@@ -474,10 +596,16 @@ function animateMapReveal(timestamp) {
 function resetMapRevealState() {
   clearMapRevealTimers();
   mapRevealStartedAt = 0;
+  setMapSurfaceState("intro");
+
+  if (mapIntroStage) {
+    mapIntroStage.hidden = false;
+    mapIntroStage.setAttribute("aria-hidden", "false");
+  }
 
   if (mapWritingStage) {
-    mapWritingStage.hidden = false;
-    mapWritingStage.setAttribute("aria-hidden", "false");
+    mapWritingStage.hidden = true;
+    mapWritingStage.setAttribute("aria-hidden", "true");
   }
 
   if (mapBlankStage) {
@@ -495,6 +623,12 @@ function resetMapRevealState() {
 function showBlankMapPopup() {
   clearMapRevealTimers();
   mapRevealStartedAt = 0;
+  setMapSurfaceState("blank");
+
+  if (mapIntroStage) {
+    mapIntroStage.hidden = true;
+    mapIntroStage.setAttribute("aria-hidden", "true");
+  }
 
   if (mapWritingStage) {
     mapWritingStage.hidden = true;
@@ -518,9 +652,37 @@ function runMapReveal() {
   mapAnimationFrameId = window.requestAnimationFrame(animateMapReveal);
 }
 
-function startMapReveal() {
-  resetMapRevealState();
+function startMapWritingSequence() {
+  setMapSurfaceState("writing");
+
+  if (mapIntroStage) {
+    mapIntroStage.hidden = true;
+    mapIntroStage.setAttribute("aria-hidden", "true");
+  }
+
+  if (mapWritingStage) {
+    mapWritingStage.hidden = false;
+    mapWritingStage.setAttribute("aria-hidden", "false");
+  }
+
   runMapReveal();
+}
+
+function startMapReveal() {
+  const introDuration = getMapIntroDuration();
+
+  resetMapRevealState();
+  setMapIntroMotionOrigin();
+
+  if (!introDuration) {
+    startMapWritingSequence();
+    return;
+  }
+
+  mapIntroTimeoutId = window.setTimeout(() => {
+    mapIntroTimeoutId = null;
+    startMapWritingSequence();
+  }, introDuration);
 }
 
 function handleMapPopupOpen() {
@@ -549,6 +711,10 @@ function handleMapPopupClose() {
 
 function handleCountdownPopupOpen() {
   startClockAnimation();
+}
+
+function handleRsvpPopupOpen() {
+  loadTallyEmbeds();
 }
 
 function handleCountdownPopupClose() {
@@ -595,6 +761,10 @@ function openPopup(popupName) {
 
   if (popup === mapPopup) {
     handleMapPopupOpen();
+  }
+
+  if (popup === rsvpPopup) {
+    handleRsvpPopupOpen();
   }
 }
 

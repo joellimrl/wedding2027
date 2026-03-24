@@ -97,9 +97,8 @@
 
       <section class="overlayLayer" aria-live="polite">
         <div id="countdown-modal" class="popupOverlay" data-popup="countdown-modal" hidden>
-          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="countdown-modal-title">
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-label="Countdown">
             <button class="overlayClose" type="button" data-popup-close aria-label="Close countdown popup">Close</button>
-            <p id="countdown-modal-title" class="popupTitle">Countdown</p>
             <div class="popupSurface clockPopupSurface">
               <div class="specialClock" data-special-clock data-hw-location="work" data-joel-location="work">
                 <div class="specialClockFace" aria-hidden="true">
@@ -145,13 +144,22 @@
         </div>
 
         <div id="map-modal" class="popupOverlay" data-popup="map-modal" hidden>
-          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="map-modal-title">
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-label="Map">
             <button class="replayMapButton" type="button" data-replay-map>
               Replay
             </button>
             <button class="overlayClose" type="button" data-popup-close aria-label="Close map popup">Close</button>
-            <p id="map-modal-title" class="popupTitle">Map</p>
             <div class="popupSurface mapPopupSurface" data-map-surface>
+              <div class="mapIntroStage" data-map-intro-stage aria-hidden="true" hidden>
+                <div class="mapIntroShell" aria-hidden="true">
+                  <div class="mapIntroPaper">
+                    <span class="mapIntroPaperFace mapIntroPaperFaceBase"></span>
+                    <span class="mapIntroPaperFace mapIntroPaperFaceLeft"></span>
+                    <span class="mapIntroPaperFace mapIntroPaperFaceRight"></span>
+                  </div>
+                </div>
+              </div>
+
               <div class="mapWritingStage" data-map-writing-stage>
                 <div class="mapWritingContainer">
                   <svg
@@ -174,18 +182,28 @@
         </div>
 
         <div id="portraits-modal" class="popupOverlay" data-popup="portraits-modal" hidden>
-          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="portraits-modal-title">
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-label="Portraits">
             <button class="overlayClose" type="button" data-popup-close aria-label="Close portraits popup">Close</button>
-            <p id="portraits-modal-title" class="popupTitle">Portraits</p>
             <div class="popupSurface" aria-hidden="true"></div>
           </div>
         </div>
 
         <div id="rsvp-modal" class="popupOverlay" data-popup="rsvp-modal" hidden>
-          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="rsvp-modal-title">
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-label="RSVP">
             <button class="overlayClose" type="button" data-popup-close aria-label="Close RSVP popup">Close</button>
-            <p id="rsvp-modal-title" class="popupTitle">RSVP</p>
-            <div class="popupSurface" aria-hidden="true"></div>
+            <div class="popupSurface rsvpPopupSurface">
+              <iframe
+                class="rsvpFormEmbed"
+                data-tally-src="https://tally.so/embed/Pd07pB?alignLeft=1&hideTitle=1&transparentBackground=1"
+                loading="lazy"
+                width="100%"
+                height="100%"
+                frameborder="0"
+                marginheight="0"
+                marginwidth="0"
+                title="Joel and Hui Wen RSVP form"
+              ></iframe>
+            </div>
           </div>
         </div>
       </section>
