@@ -59,7 +59,7 @@ body {
 .musicToggle {
   position: fixed;
   top: 18px;
-  right: 18px;
+  left: 18px;
   z-index: 1000;
   display: flex;
   align-items: center;

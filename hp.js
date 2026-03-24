@@ -871,7 +871,7 @@ function playBgm(key) {
 
 function toggleMusic() {
   isMusicMuted = !isMusicMuted;
-  lsSet(HP_MUSIC_MUTED_KEY, String(!isMusicMuted));
+  lsSet(HP_MUSIC_MUTED_KEY, String(isMusicMuted));
   musicToggle?.toggleAttribute("data-muted", isMusicMuted);
 
   if (isMusicMuted) {
