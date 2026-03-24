@@ -17,13 +17,36 @@ The setting should be dark in the evening, but with plenty of stars in the night
 There should be floating things like dementors and ghosts around that are not clearly visible but still obvious enough
 
 maybe can create the map as a video instead
+- marauders map refer to https://codepen.io/oliviale/pen/ZwWbNg
+
+maybe more cartooney style?
+open rsvp should be like opening the envelope for acceptance letter
+
+password should be fat lady
+then after that, tally form will popup (save localstorage if already completed, and add option to skip to landing)
+
+change cursor to wand?
+
+gallery popup can be pensieve, bubble animation to display wall of gifs
 
 TODO:
 - tally form can redirect to this site (and see if i want to use cloudflare pages or not)
 - tally to connect to google sheets (work laptop cant, try at home)
 - tally cant send email to recipients, need to manual send (reminders etc.)
+- add a password for tally?
+- tally form submit can replace this with owl - https://codepen.io/christinastep/pen/KEbrzx
 - add jitter to hover on popups
 - move countdown to middle, add clock?
 - add in gallery (change photo also)
 - mobile should have map and portrait side by side cuz its vertical
 - add music and music option at the top right
+
+
+- Secret Features (this will impress your guests)
+Hidden easter eggs:
+
+Type “lumos” → screen glows
+
+Type “nox” → dark mode
+
+Click random painting → secret message

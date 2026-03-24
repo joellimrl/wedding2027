@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Storybook pastel concept for Joel and Hui Wen's wedding landing page."
+    />
+    <title>Joel & Hui Wen - Storybook Concept</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./storybook.css" />
+  </head>
+  <body>
+    <main class="storybookPage">
+      <div class="skyWash" aria-hidden="true"></div>
+      <div class="sunGlow" aria-hidden="true"></div>
+      <div class="cloudField" aria-hidden="true">
+        <span class="cloud cloudOne"></span>
+        <span class="cloud cloudTwo"></span>
+        <span class="cloud cloudThree"></span>
+        <span class="cloud cloudFour"></span>
+      </div>
+      <div class="sparkleField" aria-hidden="true">
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+      </div>
+
+      <section class="landingStage" aria-label="Wedding landing page concept">
+        <div class="storybookBackdrop" aria-hidden="true">
+          <div class="castleHill"></div>
+          <div class="castleWrap">
+            <span class="castleTower towerLeft"></span>
+            <span class="castleTower towerCenter"></span>
+            <span class="castleTower towerRight"></span>
+            <span class="castleBridge"></span>
+            <span class="castleWindow windowOne"></span>
+            <span class="castleWindow windowTwo"></span>
+            <span class="castleWindow windowThree"></span>
+          </div>
+          <div class="gardenPath"></div>
+          <div class="bush bushLeft"></div>
+          <div class="bush bushRight"></div>
+          <div class="flowerPatch patchLeft"></div>
+          <div class="flowerPatch patchRight"></div>
+        </div>
+
+        <div class="heroPanel">
+          <p class="heroEyebrow">Storybook wedding concept</p>
+          <h1 class="heroNames">Joel <span>&</span> Hui Wen</h1>
+          <p class="heroCopy">
+            A bright illustrated landing page with playful popups, paper textures,
+            pastel skies, and floating sections around a whimsical castle hall.
+          </p>
+          <div class="heroMeta">
+            <span>19 June 2027</span>
+            <span>7:00 PM</span>
+            <span>Singapore</span>
+          </div>
+        </div>
+
+        <div class="featureCluster" aria-label="Design preview sections">
+          <button
+            class="featureCard featureClock"
+            type="button"
+            data-modal-trigger="clock-modal"
+            aria-controls="clock-modal"
+          >
+            <span class="featureBadge">Top</span>
+            <span class="featureIcon iconClock" aria-hidden="true"></span>
+            <strong class="featureTitle">Storybook clock</strong>
+            <span class="featureBody">A playful countdown card with event details and spinning markers.</span>
+          </button>
+
+          <button
+            class="featureCard featureMap"
+            type="button"
+            data-modal-trigger="map-modal"
+            aria-controls="map-modal"
+          >
+            <span class="featureBadge">Left</span>
+            <span class="featureIcon iconMap" aria-hidden="true"></span>
+            <strong class="featureTitle">Secret parchment</strong>
+            <span class="featureBody">A fold-out paper board showing a route preview and handwritten notes.</span>
+          </button>
+
+          <button
+            class="featureCard featurePortraits"
+            type="button"
+            data-modal-trigger="portraits-modal"
+            aria-controls="portraits-modal"
+          >
+            <span class="featureBadge">Right</span>
+            <span class="featureIcon iconPortraits" aria-hidden="true"></span>
+            <strong class="featureTitle">Portrait wall</strong>
+            <span class="featureBody">A gallery popup with whimsical frames, placeholders, and soft shadows.</span>
+          </button>
+
+          <button
+            class="featureCard featureRsvp"
+            type="button"
+            data-modal-trigger="rsvp-modal"
+            aria-controls="rsvp-modal"
+          >
+            <span class="featureBadge">Below</span>
+            <span class="featureIcon iconOwl" aria-hidden="true"></span>
+            <strong class="featureTitle">Envelope RSVP</strong>
+            <span class="featureBody">An invitation-style panel with an owl courier look and room for a link later.</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="overlayLayer" aria-live="polite">
+        <div id="clock-modal" class="popupOverlay" data-popup="clock-modal" hidden>
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="clock-title">
+            <button class="overlayClose" type="button" data-popup-close aria-label="Close clock preview">Close</button>
+            <div class="popupSurface popupSurfaceClock">
+              <div class="clockPreview">
+                <div class="clockFace" aria-hidden="true">
+                  <span class="clockRing ringOuter"></span>
+                  <span class="clockRing ringInner"></span>
+                  <span class="clockCenter"></span>
+                  <span class="clockHand handLong"></span>
+                  <span class="clockHand handShort"></span>
+                  <span class="clockLabel labelOne">Date</span>
+                  <span class="clockLabel labelTwo">Time</span>
+                  <span class="clockLabel labelThree">Place</span>
+                  <span class="clockLabel labelFour">Soon</span>
+                </div>
+                <div class="popupCopy">
+                  <p class="popupEyebrow">Clock preview</p>
+                  <h2 id="clock-title">A cheerful countdown centerpiece</h2>
+                  <p>
+                    This version treats the clock as a bright decorative anchor in the composition,
+                    with candy-colored markers, a paper dial, and space for the real countdown later.
+                  </p>
+                  <div class="miniMetaCardGrid">
+                    <div class="miniMetaCard">
+                      <span class="miniMetaLabel">Date</span>
+                      <strong>19 June 2027</strong>
+                    </div>
+                    <div class="miniMetaCard">
+                      <span class="miniMetaLabel">Time</span>
+                      <strong>7:00 PM</strong>
+                    </div>
+                    <div class="miniMetaCard">
+                      <span class="miniMetaLabel">Mood</span>
+                      <strong>Playful</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="map-modal" class="popupOverlay" data-popup="map-modal" hidden>
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="map-title">
+            <button class="overlayClose" type="button" data-popup-close aria-label="Close map preview">Close</button>
+            <div class="popupSurface popupSurfaceMap">
+              <div class="mapPreview">
+                <div class="mapFold mapFoldLeft" aria-hidden="true"></div>
+                <div class="mapFold mapFoldRight" aria-hidden="true"></div>
+                <div class="mapPaper">
+                  <p class="popupEyebrow">Map preview</p>
+                  <h2 id="map-title">A paper route that opens like a keepsake</h2>
+                  <p class="mapSpellLine">I solemnly swear I am up to no good</p>
+                  <div class="mapRoute" aria-hidden="true">
+                    <span class="routeDot dotOne"></span>
+                    <span class="routeDot dotTwo"></span>
+                    <span class="routeDot dotThree"></span>
+                    <span class="routeDot dotFour"></span>
+                    <span class="routePath"></span>
+                  </div>
+                  <div class="mapLegend">
+                    <div class="legendCard">
+                      <span class="legendTitle">Start</span>
+                      <p>Nearest train stop</p>
+                    </div>
+                    <div class="legendCard">
+                      <span class="legendTitle">Middle</span>
+                      <p>Lantern path through the gardens</p>
+                    </div>
+                    <div class="legendCard">
+                      <span class="legendTitle">End</span>
+                      <p>Celebration hall entrance</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="portraits-modal" class="popupOverlay" data-popup="portraits-modal" hidden>
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="portraits-title">
+            <button class="overlayClose" type="button" data-popup-close aria-label="Close portraits preview">Close</button>
+            <div class="popupSurface popupSurfacePortraits">
+              <div class="popupCopy popupCopyWide">
+                <p class="popupEyebrow">Portrait preview</p>
+                <h2 id="portraits-title">A gallery wall with friendly, cartoon frames</h2>
+                <p>
+                  The portraits can feel playful instead of formal: rounded frames, soft gradients,
+                  uneven borders, and little caption cards for future photos or GIFs.
+                </p>
+              </div>
+              <div class="portraitGrid" aria-hidden="true">
+                <article class="portraitCard portraitCardPeach">
+                  <span class="portraitArt portraitArtOne"></span>
+                  <strong>First frame</strong>
+                </article>
+                <article class="portraitCard portraitCardMint">
+                  <span class="portraitArt portraitArtTwo"></span>
+                  <strong>Second frame</strong>
+                </article>
+                <article class="portraitCard portraitCardSky">
+                  <span class="portraitArt portraitArtThree"></span>
+                  <strong>Third frame</strong>
+                </article>
+                <article class="portraitCard portraitCardButter">
+                  <span class="portraitArt portraitArtFour"></span>
+                  <strong>GIF slot</strong>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="rsvp-modal" class="popupOverlay" data-popup="rsvp-modal" hidden>
+          <div class="popupDialog" role="dialog" aria-modal="true" aria-labelledby="rsvp-title">
+            <button class="overlayClose" type="button" data-popup-close aria-label="Close RSVP preview">Close</button>
+            <div class="popupSurface popupSurfaceRsvp">
+              <div class="rsvpPreview">
+                <div class="envelopeShell" aria-hidden="true">
+                  <span class="envelopeBack"></span>
+                  <span class="envelopeFlap"></span>
+                  <span class="envelopeLetter"></span>
+                  <span class="owlToken"></span>
+                </div>
+                <div class="popupCopy">
+                  <p class="popupEyebrow">RSVP preview</p>
+                  <h2 id="rsvp-title">An invitation panel ready for a link later</h2>
+                  <p>
+                    This mockup keeps the RSVP light and illustrative, with a letter envelope,
+                    tiny owl badge, and a friendly placeholder button instead of a live form.
+                  </p>
+                  <a class="mockButton" href="#" aria-disabled="true">Open RSVP form</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./storybook.js"></script>
+  </body>
+</html>
