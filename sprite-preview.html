@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Room Sprite — Idle Preview</title>
+  <style>
+    body {
+      margin: 0;
+      background: #1a0e08;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 32px;
+      font-family: "Cormorant Garamond", serif;
+      color: rgba(240, 228, 204, 0.72);
+    }
+
+    h1 {
+      font-size: 1rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-style: italic;
+      margin: 0;
+      opacity: 0.6;
+    }
+
+    /* 1× */
+    .preview-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 48px;
+    }
+
+    .preview-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    @keyframes roomSpriteIdle {
+      from { background-position-x: 0; }
+      to   { background-position-x: -768px; }
+    }
+
+    .sprite {
+      display: block;
+      width:  128px;
+      height: 128px;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      background-image: url("./assets/Idle.png");
+      background-repeat: no-repeat;
+      background-size: 768px 128px;
+      background-position-y: 0;
+      animation: roomSpriteIdle 0.8s steps(6) infinite;
+    }
+
+    /* 2× scale */
+    .sprite-2x {
+      width:  256px;
+      height: 256px;
+      background-size: 1536px 256px;
+    }
+
+    /* 3× scale */
+    .sprite-3x {
+      width:  384px;
+      height: 384px;
+      background-size: 2304px 384px;
+    }
+
+    /* floor line */
+    .stage {
+      position: relative;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(201, 153, 60, 0.22);
+    }
+
+    /* controls */
+    .controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    button {
+      padding: 8px 18px;
+      border: 1px solid rgba(201, 153, 60, 0.3);
+      background: rgba(107, 21, 21, 0.5);
+      color: rgba(240, 228, 204, 0.8);
+      font-family: inherit;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 160ms, border-color 160ms;
+    }
+
+    button:hover {
+      background: rgba(139, 32, 32, 0.8);
+      border-color: rgba(201, 153, 60, 0.55);
+    }
+
+    button.active {
+      background: rgba(60, 40, 10, 0.8);
+      border-color: rgba(201, 153, 60, 0.6);
+    }
+
+    #speedLabel {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      opacity: 0.55;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    /* dark checkerboard bg for transparency check */
+    .checker {
+      background-image:
+        linear-gradient(45deg, #2a1a0a 25%, transparent 25%),
+        linear-gradient(-45deg, #2a1a0a 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #2a1a0a 75%),
+        linear-gradient(-45deg, transparent 75%, #2a1a0a 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+      background-color: #1a1008;
+      padding: 12px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Idle Sprite</h1>
+
+  <div class="preview-row">
+    <div>
+      <div class="stage checker">
+        <div class="sprite" id="s1x"></div>
+      </div>
+      <div class="preview-label">1×</div>
+    </div>
+    <!-- <div>
+      <div class="stage checker">
+        <div class="sprite sprite-2x" id="s2x"></div>
+      </div>
+      <div class="preview-label">2×</div>
+    </div>
+    <div>
+      <div class="stage checker">
+        <div class="sprite sprite-3x" id="s3x"></div>
+      </div>
+      <div class="preview-label">3×</div>
+    </div> -->
+  </div>
+
+  <div class="controls">
+    <button id="btnSlow">Slow</button>
+    <button id="btnNormal" class="active">Normal (0.8s)</button>
+    <button id="btnFast">Fast</button>
+    <span id="speedLabel">0.8s / frame</span>
+    <button id="btnFlip">Flip ↔</button>
+  </div>
+
+  <script>
+    const sprites = document.querySelectorAll('.sprite');
+    let flipped = false;
+
+    function setSpeed(dur, label) {
+      sprites.forEach(s => s.style.animationDuration = dur);
+      document.getElementById('speedLabel').textContent = label;
+    }
+
+    document.getElementById('btnSlow').addEventListener('click', () => {
+      setSpeed('1.6s', '1.6s / 6 frames');
+      document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      document.getElementById('btnSlow').classList.add('active');
+    });
+    document.getElementById('btnNormal').addEventListener('click', () => {
+      setSpeed('0.8s', '0.8s / 6 frames');
+      document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      document.getElementById('btnNormal').classList.add('active');
+    });
+    document.getElementById('btnFast').addEventListener('click', () => {
+      setSpeed('0.4s', '0.4s / 6 frames');
+      document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      document.getElementById('btnFast').classList.add('active');
+    });
+    document.getElementById('btnFlip').addEventListener('click', () => {
+      flipped = !flipped;
+      sprites.forEach(s => s.style.transform = flipped ? 'scaleX(-1)' : '');
+      document.getElementById('btnFlip').textContent = flipped ? 'Unflip ↔' : 'Flip ↔';
+    });
+  </script>
+
+</body>
+</html>
