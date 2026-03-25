@@ -46,25 +46,12 @@
           <div class="portraitFrameOuter">
             <div class="portraitFrameInner">
               <div class="portraitCanvas">
-                <!-- Fat lady figure — CSS art -->
-                <div class="fatLadyFigure">
-                  <div class="fatLadyHead">
-                    <div class="fatLadyFace">
-                      <div class="fatLadyEye fatLadyEyeLeft"></div>
-                      <div class="fatLadyEye fatLadyEyeRight"></div>
-                      <div class="fatLadyNose"></div>
-                      <div class="fatLadyMouth"></div>
-                      <div class="fatLadyCheek fatLadyCheekLeft"></div>
-                      <div class="fatLadyCheek fatLadyCheekRight"></div>
-                    </div>
-                    <div class="fatLadyHair"></div>
-                  </div>
-                  <div class="fatLadyBody">
-                    <div class="fatLadyDress"></div>
-                    <div class="fatLadyArm fatLadyArmLeft"></div>
-                    <div class="fatLadyArm fatLadyArmRight"></div>
-                  </div>
-                </div>
+                <img
+                  class="fatLadyImage"
+                  data-fat-lady-img
+                  src="./assets/fat_lady_password_ask.jpg"
+                  alt="The Fat Lady"
+                />
               </div>
             </div>
           </div>
@@ -148,6 +135,9 @@
           <!-- Table -->
           <div class="roomTable"></div>
         </div>
+
+        <!-- Sprite cursor-follower -->
+        <div class="roomSprite" data-room-sprite aria-hidden="true"></div>
 
         <!-- Interactive items -->
         <div class="roomItems">
@@ -239,6 +229,7 @@
            (plays once after door swing, before room is interactive)
       ══════════════════════════════════════════════════ -->
       <div class="owlIntro" data-owl-intro aria-hidden="true" hidden>
+        <button class="panelClose owlIntroClose" type="button" data-owl-intro-close aria-label="Close">✕</button>
         <div class="owlIntroOwl" data-owl-intro-owl>
           <div class="owlBody owlBodyLarge">
             <div class="owlHead owlHeadLarge">

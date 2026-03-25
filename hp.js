@@ -56,6 +56,11 @@ const MAP_BLANK_DELAY     = 800;
 const MAP_QUILL_OFFSET_X  = 18;
 const MAP_QUILL_OFFSET_Y  = 46;
 
+// Room sprite
+const SPRITE_SPEED_PX_S = 150;  // walking speed in px/s
+const SPRITE_ARRIVE_PX  = 10;   // stop-walking threshold
+const SPRITE_FRAME_W    = 128;  // sprite frame width in px
+
 // Spell easter eggs
 const SPELL_BUFFER_SIZE = 12;
 const SPELLS = {
@@ -69,6 +74,7 @@ const SPELLS = {
 
 const gateScreen       = document.querySelector("[data-gate-screen]");
 const fatLadyText      = document.querySelector("[data-fat-lady-text]");
+const fatLadyImg       = document.querySelector("[data-fat-lady-img]");
 const passwordForm     = document.querySelector("[data-password-form]");
 const passwordInput    = document.querySelector("[data-password-input]");
 const passwordError    = document.querySelector("[data-password-error]");
@@ -130,6 +136,9 @@ const candles          = Array.from(document.querySelectorAll("[data-candle]"));
 const wandCanvas       = document.querySelector("[data-wand-canvas]");
 const ctx              = wandCanvas ? wandCanvas.getContext("2d") : null;
 
+// Room sprite
+const roomSprite       = document.querySelector("[data-room-sprite]");
+
 // ══════════════════════════════════════════════════════════
 // State
 // ══════════════════════════════════════════════════════════
@@ -161,6 +170,15 @@ let tallyEmbedLoadPromise = null;
 let particles = [];
 let mouseX = 0;
 let mouseY = 0;
+
+// Room sprite state
+let spriteX           = -1;   // -1 means not yet initialised
+let spriteY           = -1;
+let spriteTargetX     = 0;
+let spriteTargetY     = 0;
+let spriteWalking     = false;
+let spriteFacingRight = true;
+let spritePrevTime    = 0;
 
 // ══════════════════════════════════════════════════════════
 // localStorage helpers
@@ -963,11 +981,76 @@ function updateAndDrawParticles(now) {
   particles = particles.filter((p) => p.life > 0);
 }
 
+// ══════════════════════════════════════════════════════════
+// Room sprite — cursor follower
+// ══════════════════════════════════════════════════════════
+
+function initSprite() {
+  if (!roomScreen || !roomSprite) return;
+  const rect = roomScreen.getBoundingClientRect();
+  if (!rect.width) return;
+  spriteX       = rect.width * 0.5;
+  spriteY       = rect.height * 0.68;
+  spriteTargetX = spriteX;
+  spriteTargetY = spriteY;
+  applySpriteCss();
+}
+
+function applySpriteCss() {
+  if (!roomSprite) return;
+  roomSprite.style.left = `${spriteX - SPRITE_FRAME_W / 2}px`;
+  roomSprite.style.top  = `${spriteY - SPRITE_FRAME_W}px`;
+  roomSprite.classList.toggle("is-walking", spriteWalking);
+  roomSprite.classList.toggle("is-flipped", !spriteFacingRight);
+}
+
+function updateSpriteTarget(clientX, clientY) {
+  if (!roomScreen) return;
+  const rect = roomScreen.getBoundingClientRect();
+  const pad  = SPRITE_FRAME_W / 2;
+  spriteTargetX = Math.max(pad, Math.min(rect.width  - pad, clientX - rect.left));
+  spriteTargetY = Math.max(pad, Math.min(rect.height - pad, clientY - rect.top));
+}
+
+function tickSprite(now) {
+  if (!roomSprite) return;
+
+  // Pause when room hidden or a panel is open
+  if (!roomScreen || roomScreen.hidden || activePanel) {
+    if (spriteWalking) { spriteWalking = false; applySpriteCss(); }
+    spritePrevTime = 0;
+    return;
+  }
+
+  // Lazy initialise position on first tick after room is shown
+  if (spriteX < 0) { initSprite(); return; }
+
+  const dt = spritePrevTime > 0 ? Math.min((now - spritePrevTime) / 1000, 0.1) : 0;
+  spritePrevTime = now;
+
+  const dx   = spriteTargetX - spriteX;
+  const dy   = spriteTargetY - spriteY;
+  const dist = Math.hypot(dx, dy);
+
+  if (dist < SPRITE_ARRIVE_PX) {
+    if (spriteWalking) { spriteWalking = false; applySpriteCss(); }
+    return;
+  }
+
+  const step = Math.min(SPRITE_SPEED_PX_S * dt, dist);
+  spriteX += (dx / dist) * step;
+  spriteY += (dy / dist) * step;
+  if (Math.abs(dx) > 1) spriteFacingRight = dx > 0;
+  if (!spriteWalking) spriteWalking = true;
+  applySpriteCss();
+}
+
 function renderWandFrame(now) {
   if (!ctx || !wandCanvas) return;
   ctx.clearRect(0, 0, wandCanvas.width, wandCanvas.height);
   updateAndDrawParticles(now);
   drawWand(mouseX, mouseY);
+  tickSprite(now);
   window.requestAnimationFrame(renderWandFrame);
 }
 
@@ -1031,6 +1114,12 @@ function handleGlobalKeydown(event) {
 
 // Password form
 passwordForm?.addEventListener("submit", handlePasswordSubmit);
+passwordInput?.addEventListener("input", () => {
+  if (!fatLadyImg) return;
+  fatLadyImg.src = passwordInput.value.length === 0
+    ? "./assets/fat_lady_password_clear.jpg"
+    : "./assets/fat_lady_password_ask.jpg";
+});
 
 // Room item clicks
 roomItems.forEach((item) => {
@@ -1045,6 +1134,7 @@ document.addEventListener("mousemove", (event) => {
   mouseY = event.clientY;
   if (roomScreen && !roomScreen.hidden) {
     handleRoomMouseMove(event);
+    updateSpriteTarget(event.clientX, event.clientY);
   }
 });
 
@@ -1053,6 +1143,11 @@ panelCloseButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     closePanel(btn.closest("[data-panel]"));
   });
+});
+
+// Owl intro close button
+document.querySelector("[data-owl-intro-close]")?.addEventListener("click", () => {
+  closeOwlIntro();
 });
 
 // Click outside panel to close
