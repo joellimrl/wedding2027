@@ -42,7 +42,20 @@ Four clickable items are placed around the room:
 **Spell easter eggs (keyboard listener always active on landing page):**
 - `lumos` → candle sconces on the room walls light up with a CSS glow animation; the wand cursor emits a soft light halo.
 - `nox` → extinguishes all candles and the cursor light.
-- Implementation: rolling buffer of last ~10 keypresses checked against spell strings. More spells can be added later.
+- `wingardiumleviosa` → the Pensieve and Map items on the common room visually levitate upward with a CSS float animation, then drop back down with a thud. (need to increase the spell buffer length)
+- `incendio` → the fireplace flames grow larger (CSS scale/brightness animation), then settle back after a few seconds.
+- `reducto` → one of the common room chairs explodes apart with a CSS fragment/shake animation.
+- `reparo` → the chair (if blown up) reassembles itself with a reverse fragment animation; sparkle effect plays on completion.
+- `avadakedavra` → intercepted before the final `a`: as the user types `avadakedavr`, Dumbledore appears (CSS-art overlay or pixel sprite) with a scolding dialogue bubble ("I'm afraid I cannot let you do that."). The spell never completes.
+- Implementation: rolling buffer of last ~15 keypresses checked against spell strings. More spells can be added later.
+
+**Spellbook UI:**
+- A small spellbook icon is always visible in a corner of the common room (e.g. bottom-left).
+- Clicking it opens a parchment-style popup listing all known spells.
+- Each entry shows only the **effect description** — the spell name itself is hidden (shown as a row of `?` glyphs or a redacted ink-blot style).
+- Once the user has successfully cast a spell via keyboard, its entry in the spellbook **reveals** the spell name (with a quill-writing CSS animation).
+- Discovery state is persisted in localStorage under `HP_SPELLS_DISCOVERED` (JSON array of discovered spell keys).
+- The spellbook lists spells in discovery order; undiscovered spells are listed as locked entries at the bottom.
 
 ## Cursor
 
