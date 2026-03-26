@@ -1,14 +1,8 @@
-/* Earth-tone selector page for all design directions. */
-
 :root {
-  --bg: #f2ebdf;
-  --panel: rgba(252, 248, 241, 0.82);
-  --panel-strong: rgba(255, 250, 244, 0.96);
-  --text: #2b241d;
-  --muted: #6c6155;
-  --accent: #9f7c59;
-  --border: rgba(43, 38, 32, 0.1);
-  --shadow: 0 28px 64px rgba(67, 54, 40, 0.12);
+  --ink: #f7efe2;
+  --paper: rgba(26, 17, 13, 0.68);
+  --line: rgba(248, 229, 196, 0.2);
+  --shadow: rgba(0, 0, 0, 0.34);
 }
 
 * {
@@ -17,194 +11,1268 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
   margin: 0;
-  color: var(--text);
-  background:
-    linear-gradient(rgba(242, 235, 223, 0.86), rgba(242, 235, 223, 0.96)),
-    url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=80") center/cover fixed;
-  font-family: "Georgia", "Times New Roman", serif;
-  line-height: 1.5;
+  color: var(--ink);
+  font-family: "Manrope", sans-serif;
+  background: #090605;
 }
 
-.page {
-  min-height: 100%;
-  width: min(1120px, calc(100% - 28px));
-  margin: 0 auto;
-  padding: 36px 0 60px;
+.experience {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #090605;
 }
 
-.hero {
-  width: 100%;
-  text-align: center;
-  padding: 42px 24px 34px;
-  border: 1px solid var(--border);
-  background: var(--panel);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow);
+.replayIntroLayer {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 6;
 }
 
-.kicker {
-  margin: 0 0 10px;
-  font-size: 14px;
-  letter-spacing: 0.14em;
+.replayIntroButton {
+  position: relative;
+  z-index: 6;
+  border: 1px solid rgba(248, 229, 196, 0.28);
+  padding: 12px 16px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--muted);
+  background: rgba(18, 12, 9, 0.58);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.replayIntroButton:hover {
+  background: rgba(31, 21, 16, 0.78);
+  border-color: rgba(248, 229, 196, 0.42);
+  transform: translateY(-1px);
+}
+
+.replayIntroButton:focus-visible {
+  outline: 2px solid rgba(248, 229, 196, 0.72);
+  outline-offset: 2px;
+}
+
+.experience.is-intro-playing .replayIntroLayer {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.replayIntroLayer.is-hidden-on-mobile-scroll {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.openingScene,
+.mainHall {
+  position: absolute;
+  inset: 0;
+}
+
+.openingScene {
+  z-index: 2;
+  background: #000;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 900ms ease, visibility 900ms ease;
+}
+
+.openingVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mainHall {
+  display: grid;
+  grid-template-columns:
+    minmax(220px, var(--desktop-side-card-width))
+    minmax(0, var(--desktop-content-width))
+    minmax(220px, var(--desktop-side-card-width));
+  grid-template-areas:
+    ". countdown ."
+    "map content portraits"
+    ". rsvp .";
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  justify-items: stretch;
+  column-gap: var(--desktop-side-gap);
+  row-gap: clamp(18px, 2vw, 28px);
+  padding: 32px clamp(22px, 4vw, 48px);
+  isolation: isolate;
+  --desktop-content-width: min(720px, calc(100vw - 760px));
+  --desktop-side-gap: clamp(28px, 3vw, 52px);
+  --desktop-side-card-width: clamp(260px, 20vw, 340px);
+  --desktop-center-card-width: clamp(320px, 28vw, 460px);
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 900ms ease, transform 1200ms ease;
+}
+
+.hallBackdrop,
+.hallOverlay {
+  position: absolute;
+  inset: 0;
+}
+
+.hallBackdrop {
+  background: url("./hall.png") center/cover no-repeat;
+  transform: scale(1.02);
+}
+
+.hallOverlay {
+  background:
+    linear-gradient(180deg, rgba(8, 6, 5, 0.28), rgba(8, 6, 5, 0.62)),
+    rgba(10, 7, 5, 0.5);
+}
+
+.hallContent {
+  grid-area: content;
+  position: relative;
+  z-index: 1;
+  width: min(var(--desktop-content-width), 100%);
+  padding: clamp(28px, 5vw, 56px);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 28px 80px var(--shadow);
+  text-align: center;
+}
+
+.eyebrow,
+.meta {
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  font-size: 0.8rem;
+  color: rgba(247, 239, 226, 0.72);
 }
 
 .names {
   margin: 0;
-  font-weight: 550;
-  font-size: clamp(40px, 7vw, 72px);
-  letter-spacing: 0.02em;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3rem, 8vw, 5.75rem);
+  font-weight: 600;
+  line-height: 0.92;
 }
 
-.amp {
-  color: var(--accent);
-  font-weight: 500;
+.names span {
+  font-size: 0.72em;
+  opacity: 0.88;
 }
 
-.details {
-  margin: 14px 0 0;
-  color: var(--muted);
-  font-size: 16px;
+.lede {
+  width: min(34rem, 100%);
+  margin: 24px auto 0;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.8;
+  color: rgba(247, 239, 226, 0.84);
 }
 
-.intro {
-  width: min(720px, 100%);
-  margin: 18px auto 0;
-  color: var(--muted);
-  font-size: 17px;
-}
-
-.sep {
-  margin: 0 10px;
-}
-
-.card {
-  width: 100%;
-  margin-top: 18px;
-  padding: 28px 24px;
-  border: 1px solid var(--border);
-  background: var(--panel);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow);
-}
-
-.cardTitle {
-  margin: 0;
-  font-size: 14px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.sectionHeader {
+.meta {
   display: flex;
+  justify-content: center;
+  gap: 18px;
   flex-wrap: wrap;
-  gap: 12px 24px;
-  align-items: end;
-  justify-content: space-between;
+  margin: 28px 0 0;
+  font-size: 0.8rem;
+  color: rgba(247, 239, 226, 0.72);
 }
 
-.sectionCopy {
-  margin: 0;
-  max-width: 480px;
-  color: var(--muted);
+.hallHotspots {
+  display: contents;
+  pointer-events: none;
 }
 
-.conceptGrid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 24px;
-}
-
-.conceptCard {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 220px;
-  padding: 18px;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid var(--border);
-  background: var(--panel-strong);
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-}
-
-.conceptCard:hover,
-.conceptCard:focus-visible {
-  transform: translateY(-4px);
-  border-color: rgba(159, 124, 89, 0.4);
-  box-shadow: 0 20px 34px rgba(63, 46, 31, 0.12);
-  outline: none;
-}
-
-.conceptCard h3 {
-  margin: 18px 0 10px;
-  font-size: 1.35rem;
-}
-
-.conceptCard p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.96rem;
-}
-
-.conceptNumber {
-  display: inline-flex;
-  width: fit-content;
-  padding-bottom: 10px;
-  color: var(--accent);
-  border-bottom: 1px solid rgba(159, 124, 89, 0.35);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-size: 0.78rem;
-}
-
-.footer {
+.hotspotCard {
+  --base-transform: none;
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
   width: 100%;
-  margin-top: 24px;
+  max-width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  backdrop-filter: none;
+  appearance: none;
+  transform: var(--base-transform);
+  transition: filter 180ms ease;
+}
+
+.hotspotCard:focus-visible {
+  outline: 2px solid rgba(248, 229, 196, 0.74);
+  outline-offset: 4px;
+}
+
+.hotspotLabel {
+  display: none;
+}
+
+.hotspotCountdown {
+  grid-area: countdown;
+  justify-self: center;
+  width: min(100%, var(--desktop-center-card-width));
+  padding: 18px;
+  border: 1px solid rgba(248, 229, 196, 0.18);
+  background: rgba(19, 13, 10, 0.72);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(12px);
+}
+
+.hotspotCountdown:hover,
+.hotspotCountdown:focus-visible {
+  border-color: rgba(248, 229, 196, 0.42);
+  background: rgba(30, 21, 16, 0.84);
+  box-shadow: 0 30px 84px rgba(0, 0, 0, 0.3);
+}
+
+.countdownMountHall {
+  width: 100%;
+}
+
+.countdownGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.countdownUnit,
+.countdownComplete {
+  padding: 0;
+  border: 0;
+  background: transparent;
   text-align: center;
 }
 
-.footerText {
+.countdownValue,
+.countdownCompleteTitle {
+  display: block;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  line-height: 0.9;
+}
+
+.countdownLabel,
+.countdownCompleteBody {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(247, 239, 226, 0.64);
+}
+
+.hotspotImageCard {
+  width: min(100%, var(--desktop-side-card-width));
+  padding: 0;
+}
+
+.hotspotMap {
+  grid-area: map;
+}
+
+.hotspotPortraits {
+  grid-area: portraits;
+}
+
+.hotspotRsvp {
+  grid-area: rsvp;
+  justify-self: center;
+  width: min(100%, clamp(280px, 24vw, 360px));
+}
+
+.hotspotImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(34vh, 300px);
+  object-fit: contain;
+  border: 0;
+}
+
+.overlayLayer {
+  position: relative;
+  z-index: 8;
+}
+
+.popupOverlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: stretch;
+  padding: 0;
+  background: rgba(10, 7, 5, 0.48);
+  backdrop-filter: blur(6px);
+}
+
+.popupOverlay[hidden] {
+  display: none;
+}
+
+.popupDialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 84px 32px 32px;
+  pointer-events: none;
+  overflow: auto;
+}
+
+#countdown-modal .popupDialog {
+  width: 100%;
+  min-height: 100vh;
+}
+
+#map-modal .popupDialog {
+  width: 100%;
+  min-height: 100vh;
+}
+
+#portraits-modal .popupDialog {
+  width: 100%;
+  min-height: 100vh;
+}
+
+#rsvp-modal .popupDialog {
+  width: 100%;
+  min-height: 100vh;
+  justify-content: flex-start;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.overlayClose {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  pointer-events: auto;
+  border: 1px solid rgba(248, 229, 196, 0.26);
+  padding: 10px 14px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(18, 12, 9, 0.7);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.overlayClose:hover,
+.overlayClose:focus-visible {
+  border-color: rgba(248, 229, 196, 0.42);
+  background: rgba(31, 21, 16, 0.84);
+}
+
+.popupSurface {
+  flex: 1;
+  min-height: 0;
+  pointer-events: auto;
+  border: 0;
+  background: transparent;
+}
+
+#countdown-modal .popupSurface {
+  min-height: 0;
+}
+
+.clockPopupSurface {
+  display: grid;
+  place-items: center;
+  padding: clamp(20px, 5vw, 44px);
+}
+
+.specialClock {
+  width: min(100%, 720px);
+  display: grid;
+  grid-template-columns: minmax(280px, 1.05fr) minmax(180px, 0.72fr);
+  gap: clamp(24px, 5vw, 56px);
+  align-items: center;
+}
+
+.specialClockFace {
+  position: relative;
+  width: min(100%, 440px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 1px solid rgba(248, 229, 196, 0.34);
+  background:
+    radial-gradient(circle at center, rgba(255, 241, 215, 0.12), transparent 38%),
+    radial-gradient(circle at center, rgba(248, 229, 196, 0.08), transparent 64%),
+    linear-gradient(180deg, rgba(28, 20, 15, 0.98), rgba(12, 8, 6, 0.98));
+  box-shadow:
+    inset 0 0 0 14px rgba(12, 8, 6, 0.78),
+    inset 0 0 0 15px rgba(248, 229, 196, 0.1),
+    0 28px 80px rgba(0, 0, 0, 0.3);
+}
+
+.specialClockFaceGlow,
+.specialClockCenterRing,
+.specialClockHub {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.specialClockFaceGlow {
+  inset: 7%;
+  border: 1px solid rgba(248, 229, 196, 0.08);
+  box-shadow: inset 0 0 44px rgba(255, 227, 168, 0.06);
+}
+
+.specialClockCenterRing {
+  top: 50%;
+  left: 50%;
+  width: 84px;
+  height: 84px;
+  border: 1px solid rgba(248, 229, 196, 0.22);
+  background: radial-gradient(circle at center, rgba(52, 36, 27, 0.94), rgba(18, 12, 9, 0.98));
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.specialClockHub {
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, #fff7eb, #d5b989 64%, #725539 100%);
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.specialClockLabels {
+  position: absolute;
+  inset: 0;
+}
+
+.specialClockLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 92px;
+  padding: 8px 10px;
+  border: 1px solid rgba(248, 229, 196, 0.08);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: rgba(247, 239, 226, 0.72);
+  background: rgba(20, 14, 11, 0.56);
+  transform:
+    translate(-50%, -50%)
+    rotate(var(--label-angle))
+    translateY(-165px)
+    rotate(calc(var(--label-angle) * -1));
+  transition: color 320ms ease, border-color 320ms ease, background 320ms ease, box-shadow 320ms ease;
+}
+
+.specialClockLabel.is-hw-active {
+  color: #fff3dc;
+  border-color: rgba(248, 229, 196, 0.34);
+  background: rgba(73, 52, 32, 0.42);
+  box-shadow: 0 0 18px rgba(255, 219, 150, 0.14);
+}
+
+.specialClockLabel.is-joel-active {
+  color: #fef5e8;
+  border-color: rgba(191, 229, 248, 0.36);
+  background: rgba(36, 50, 62, 0.42);
+  box-shadow: 0 0 18px rgba(168, 218, 255, 0.14);
+}
+
+.specialClockLabel.is-hw-active.is-joel-active {
+  border-color: rgba(248, 229, 196, 0.46);
+  background: linear-gradient(135deg, rgba(95, 64, 34, 0.42), rgba(36, 50, 62, 0.42));
+  box-shadow: 0 0 20px rgba(255, 226, 173, 0.2);
+}
+
+.specialClockHand {
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 38%;
+  border-radius: 999px;
+  transform-origin: center calc(100% - 10px);
+  transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 4;
+}
+
+.specialClockHand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 247, 231, 0.96), rgba(185, 145, 87, 0.9));
+  box-shadow: 0 0 12px rgba(255, 214, 140, 0.18);
+}
+
+.specialClockHand::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(248, 229, 196, 0.22);
+  background: rgba(23, 16, 12, 0.94);
+  transform: translateX(-50%);
+}
+
+.specialClockHandTip {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 56px;
+  height: auto;
+  transform: translateX(-50%);
+  transform-origin: center center;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.28));
+}
+
+.specialClockHandHw {
+  left: calc(50% - 6px);
+  transform: translate(-50%, calc(-100% + 10px)) rotate(var(--clock-hand-angle, 0deg));
+}
+
+.specialClockHandJoel {
+  left: calc(50% + 6px);
+  opacity: 0.92;
+  transform: translate(-50%, calc(-100% + 10px)) rotate(var(--clock-hand-angle, 0deg));
+  transition-delay: 80ms;
+}
+
+.specialClockReadout {
+  display: grid;
+  gap: 10px;
+  align-content: center;
+}
+
+.specialClockEyebrow,
+.specialClockNote {
   margin: 0;
-  color: var(--muted);
-  font-size: 14px;
+}
+
+.specialClockEyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(247, 239, 226, 0.62);
+}
+
+.specialClockStatusGrid {
+  display: grid;
+  gap: 14px;
+}
+
+.specialClockNoteCard {
+  padding: 16px 16px 14px;
+  border: 1px solid rgba(248, 229, 196, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 243, 219, 0.08), rgba(255, 243, 219, 0.02)),
+    rgba(10, 7, 5, 0.42);
+}
+
+.specialClockNoteCardHw {
+  box-shadow: inset 0 0 0 1px rgba(210, 173, 116, 0.08);
+}
+
+.specialClockNoteCardJoel {
+  box-shadow: inset 0 0 0 1px rgba(152, 199, 232, 0.08);
+}
+
+.specialClockPerson {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(247, 239, 226, 0.62);
+}
+
+.specialClockStatus {
+  margin: 8px 0 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+  line-height: 0.92;
+  color: #fff2da;
+}
+
+.specialClockNoteBox {
+  min-height: 78px;
+  margin-top: 14px;
+  padding: 12px 0 0;
+  border: 0;
+  background: transparent;
+  font-family: "Manrope", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(247, 239, 226, 0.82);
+}
+
+#map-modal .popupSurface,
+#portraits-modal .popupSurface {
+  min-height: 0;
+}
+
+#map-modal .popupSurface {
+  position: relative;
+  overflow: hidden;
+}
+
+.replayMapButton {
+  position: absolute;
+  top: 18px;
+  right: 94px;
+  z-index: 2;
+  pointer-events: auto;
+  border: 1px solid rgba(248, 229, 196, 0.28);
+  padding: 10px 14px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(18, 12, 9, 0.58);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.replayMapButton:hover {
+  background: rgba(31, 21, 16, 0.78);
+  border-color: rgba(248, 229, 196, 0.42);
+  transform: translateY(-1px);
+}
+
+.replayMapButton:focus-visible {
+  outline: 2px solid rgba(248, 229, 196, 0.72);
+  outline-offset: 2px;
+}
+
+.mapPopupSurface {
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  perspective: 2400px;
+  --map-paper-base: #d6bd95;
+  --map-paper-shadow: #bf9962;
+  --map-paper-crease: rgba(111, 72, 35, 0.18);
+  --map-paper-ink: #674221;
+  --map-intro-origin-x: 0px;
+  --map-intro-origin-y: 18vh;
+  --map-intro-origin-scale: 0.28;
+  --map-intro-duration: 1420ms;
+  background: transparent;
+}
+
+.mapIntroStage,
+.mapWritingStage,
+.mapBlankStage {
+  grid-area: 1 / 1;
+  width: 100%;
+  min-height: inherit;
+}
+
+.mapIntroStage,
+.mapWritingStage {
+  display: grid;
+  place-items: center;
+  padding: 22px;
+}
+
+.mapIntroStage {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.mapIntroShell {
+  width: min(100%, 880px);
+  aspect-ratio: 1.68;
+  transform-style: preserve-3d;
+}
+
+.mapPopupSurface.is-map-intro-active .mapIntroShell {
+  animation: mapIntroZoom var(--map-intro-duration) cubic-bezier(0.2, 0.88, 0.24, 1) forwards;
+}
+
+.mapIntroPaper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(91, 56, 26, 0.22);
+  background:
+    radial-gradient(circle at 50% 36%, rgba(255, 244, 224, 0.72), transparent 46%),
+    linear-gradient(180deg, rgba(249, 235, 209, 0.96), rgba(214, 189, 149, 0.98));
+  box-shadow:
+    0 36px 100px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 245, 229, 0.24);
+  overflow: hidden;
+}
+
+.mapIntroPaper::before,
+.mapIntroPaper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(105, 67, 32, 0.26), transparent);
+  opacity: 0.9;
+}
+
+.mapIntroPaper::before {
+  left: calc(50% - 1px);
+}
+
+.mapIntroPaper::after {
+  left: 50%;
+}
+
+.mapIntroPaperFace {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 245, 228, 0.74), rgba(215, 189, 149, 0.92)),
+    linear-gradient(90deg, rgba(131, 93, 57, 0.06), transparent 32%, transparent 68%, rgba(131, 93, 57, 0.08));
+}
+
+.mapIntroPaperFaceBase {
+  inset: 0;
+}
+
+.mapIntroPaperFaceLeft,
+.mapIntroPaperFaceRight {
+  width: 50%;
+  backface-visibility: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 247, 233, 0.14);
+}
+
+.mapIntroPaperFaceLeft {
+  left: 0;
+  transform-origin: right center;
+  background:
+    linear-gradient(90deg, rgba(180, 140, 92, 0.22), transparent 22%),
+    linear-gradient(180deg, rgba(246, 227, 197, 0.96), rgba(203, 172, 129, 0.96));
+}
+
+.mapIntroPaperFaceRight {
+  right: 0;
+  transform-origin: left center;
+  background:
+    linear-gradient(270deg, rgba(180, 140, 92, 0.22), transparent 22%),
+    linear-gradient(180deg, rgba(246, 227, 197, 0.96), rgba(203, 172, 129, 0.96));
+}
+
+.mapPopupSurface.is-map-intro-active .mapIntroPaperFaceLeft {
+  animation: mapFoldOpenLeft var(--map-intro-duration) cubic-bezier(0.2, 0.88, 0.24, 1) forwards;
+}
+
+.mapPopupSurface.is-map-intro-active .mapIntroPaperFaceRight {
+  animation: mapFoldOpenRight var(--map-intro-duration) cubic-bezier(0.2, 0.88, 0.24, 1) forwards;
+}
+
+.mapWritingContainer {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  min-height: min(52vw, 520px);
+  padding: clamp(52px, 8vw, 88px) clamp(18px, 4vw, 40px) clamp(28px, 5vw, 42px);
+  border: 1px solid rgba(91, 56, 26, 0.22);
+  background:
+    radial-gradient(circle at 50% 32%, rgba(255, 244, 224, 0.72), transparent 42%),
+    linear-gradient(180deg, rgba(249, 235, 209, 0.98), rgba(214, 189, 149, 0.98));
+  box-shadow:
+    0 36px 100px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 245, 229, 0.24);
+}
+
+.mapSpellSvg {
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  overflow: visible;
+}
+
+.mapSpellLineText {
+  --map-fill-opacity: 0;
+  fill: rgba(120, 77, 37, 0.18);
+  fill-opacity: var(--map-fill-opacity);
+  stroke: rgba(102, 63, 28, 0.92);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 44px;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  paint-order: stroke fill;
+  text-anchor: middle;
+  stroke-dasharray: 2400;
+  stroke-dashoffset: 2400;
+}
+
+.mapQuill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 56px;
+  pointer-events: none;
+  transform-origin: 18px 46px;
+  will-change: transform;
+}
+
+.mapBlankStage {
+  display: grid;
+  place-items: center;
+  padding: 22px;
+}
+
+.mapBlankStage::before {
+  content: "";
+  display: block;
+  width: min(100%, 880px);
+  aspect-ratio: 1.68;
+  border: 1px solid rgba(91, 56, 26, 0.22);
+  background:
+    radial-gradient(circle at 50% 32%, rgba(255, 244, 224, 0.72), transparent 42%),
+    linear-gradient(180deg, rgba(249, 235, 209, 0.98), rgba(214, 189, 149, 0.98));
+  box-shadow:
+    0 36px 100px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 245, 229, 0.24);
+}
+
+.mapBlankStage[hidden],
+.mapWritingStage[hidden] {
+  display: none;
+}
+
+.mapIntroStage[hidden] {
+  display: none;
+}
+
+@keyframes mapIntroZoom {
+  0% {
+    transform: translate(var(--map-intro-origin-x), var(--map-intro-origin-y)) scale(var(--map-intro-origin-scale)) rotate(-8deg);
+    filter: saturate(0.86) brightness(0.88);
+  }
+
+  58% {
+    transform: translate(0, 0) scale(1.03) rotate(0.5deg);
+    filter: saturate(1) brightness(1);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    filter: saturate(1) brightness(1);
+  }
+}
+
+@keyframes mapFoldOpenLeft {
+  0%,
+  18% {
+    transform: perspective(2200px) rotateY(0deg);
+    box-shadow: inset 0 0 0 1px rgba(255, 247, 233, 0.14);
+  }
+
+  100% {
+    transform: perspective(2200px) rotateY(112deg);
+    box-shadow: inset -24px 0 36px rgba(73, 44, 18, 0.24);
+  }
+}
+
+@keyframes mapFoldOpenRight {
+  0%,
+  18% {
+    transform: perspective(2200px) rotateY(0deg);
+    box-shadow: inset 0 0 0 1px rgba(255, 247, 233, 0.14);
+  }
+
+  100% {
+    transform: perspective(2200px) rotateY(-112deg);
+    box-shadow: inset 24px 0 36px rgba(73, 44, 18, 0.24);
+  }
+}
+
+#rsvp-modal .popupSurface {
+  min-height: 0;
+}
+
+.rsvpPopupSurface {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 960px);
+  margin: 0 auto;
+  border: 1px solid rgba(91, 56, 26, 0.22);
+  background:
+    radial-gradient(circle at 50% 32%, rgba(255, 244, 224, 0.72), transparent 42%),
+    linear-gradient(180deg, rgba(249, 235, 209, 0.98), rgba(214, 189, 149, 0.98));
+  box-shadow:
+    0 36px 100px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 245, 229, 0.24);
+  overflow: hidden;
+}
+
+.rsvpPopupSurface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 249, 237, 0.2) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 74% 34%, rgba(124, 87, 51, 0.12) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 42% 78%, rgba(255, 251, 242, 0.16) 0 1.2px, transparent 2px),
+    repeating-linear-gradient(
+      0deg,
+      rgba(111, 72, 35, 0.035) 0 2px,
+      rgba(255, 247, 233, 0.025) 2px 4px,
+      transparent 4px 8px
+    );
+  background-size: 180px 180px, 220px 220px, 260px 260px, 100% 14px;
+  opacity: 0.52;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.rsvpFormEmbed {
+  --rsvp-panel-gutter: clamp(16px, 3vw, 28px);
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  padding: var(--rsvp-panel-gutter);
+  min-height: calc(100vh - 116px);
+  height: auto;
+  border: 0;
+  background: transparent;
+}
+
+@keyframes hotspotWiggle {
+  0%,
+  100% {
+    transform: var(--base-transform) rotate(0deg);
+  }
+
+  25% {
+    transform: var(--base-transform) rotate(-1.6deg) translateY(-1px);
+  }
+
+  50% {
+    transform: var(--base-transform) rotate(1.6deg) translateY(1px);
+  }
+
+  75% {
+    transform: var(--base-transform) rotate(-0.8deg);
+  }
+}
+
+.experience.is-ready .mainHall,
+.experience.is-complete .mainHall {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.experience.is-complete .openingScene {
+  opacity: 0;
+  visibility: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
-    scroll-behavior: auto !important;
-    transition: none !important;
-    animation: none !important;
+  .openingScene,
+  .mainHall {
+    transition: none;
+  }
+
+  .hotspotCard:hover,
+  .hotspotCard:focus-visible {
+    animation: none;
+  }
+
+  .specialClockHand,
+  .specialClockLabel {
+    transition: none;
+  }
+
+  .mapPopupSurface.is-map-intro-active .mapIntroShell,
+  .mapPopupSurface.is-map-intro-active .mapIntroPaperFaceLeft,
+  .mapPopupSurface.is-map-intro-active .mapIntroPaperFaceRight {
+    animation: none;
   }
 }
 
 @media (max-width: 1080px) {
-  .conceptGrid {
+  .mainHall {
+    --desktop-content-width: 100%;
+    --desktop-side-gap: 0px;
+    --desktop-side-card-width: 100%;
+    --desktop-center-card-width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: none;
+    align-content: center;
+    justify-items: center;
+    gap: 24px;
+    padding-top: 84px;
+    padding-bottom: 28px;
+  }
+
+  .hallHotspots {
+    position: relative;
+    inset: auto;
+    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    width: min(720px, 100%);
+    pointer-events: auto;
+  }
+
+  .hotspotCard {
+    position: relative;
+    z-index: 2;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    --base-transform: none;
+    transform: none;
+  }
+
+  .hotspotCountdown,
+  .hotspotRsvp {
+    grid-column: 1 / -1;
+  }
+
+  .hallContent,
+  .hotspotCountdown,
+  .hotspotMap,
+  .hotspotPortraits,
+  .hotspotRsvp {
+    grid-area: auto;
+  }
+
+  .hotspotImageCard {
+    padding: 0;
+  }
+
+  .hotspotImage {
+    height: 220px;
+    max-height: none;
+    object-fit: cover;
   }
 }
 
 @media (max-width: 640px) {
-  .page {
-    width: min(100% - 18px, 1120px);
-    padding-top: 18px;
+  .replayIntroLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 14px 18px 0;
+    z-index: 3;
+    transition: opacity 180ms ease, visibility 180ms ease;
   }
 
-  .hero,
-  .card {
-    padding-left: 18px;
-    padding-right: 18px;
+  .replayIntroButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    font-size: 0.72rem;
   }
 
-  .conceptGrid {
-    grid-template-columns: 1fr;
+  .mainHall {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    justify-items: stretch;
+    gap: 18px;
+    padding: 72px 18px 18px;
+    overflow-y: auto;
+  }
+
+  .hallContent {
+    width: 100%;
+    padding: 24px 20px;
+    order: 1;
+  }
+
+  .hallHotspots {
+    display: contents;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hotspotCard {
+    order: 3;
+  }
+
+  .hotspotCountdown,
+  .hotspotRsvp {
+    grid-column: auto;
+  }
+
+  .hotspotCountdown {
+    padding: 16px 14px;
+    order: 4;
+  }
+
+  .hotspotRsvp {
+    order: 2;
+  }
+
+  .hotspotMap {
+    order: 3;
+  }
+
+  .hotspotPortraits {
+    order: 5;
+  }
+
+  .countdownGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hotspotImage {
+    height: 190px;
+  }
+
+  .popupOverlay {
+    padding: 0;
+  }
+
+  #map-modal .popupDialog {
+    width: 100%;
+  }
+
+  .replayMapButton,
+  .overlayClose {
+    padding: 10px 12px;
+    font-size: 0.68rem;
+  }
+
+  .mapWritingStage {
+    padding: 18px 14px;
+  }
+
+  .mapIntroStage,
+  .mapBlankStage {
+    padding: 18px 14px;
+  }
+
+  .mapWritingContainer {
+    min-height: min(62vw, 420px);
+    padding: 48px 12px 20px;
+  }
+
+  .mapIntroShell,
+  .mapBlankStage::before {
+    width: 100%;
+  }
+
+  .mapSpellLineText {
+    font-size: 34px;
+    stroke-width: 1.5;
+  }
+
+  .popupDialog {
+    min-height: 100vh;
+    padding: 72px 18px 18px;
+    width: 100%;
+    margin: 0;
+  }
+
+  .replayMapButton {
+    right: 88px;
+  }
+
+  #countdown-modal .popupDialog,
+  #map-modal .popupDialog,
+  #portraits-modal .popupDialog,
+  #rsvp-modal .popupDialog {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  #countdown-modal .popupSurface,
+  #map-modal .popupSurface,
+  #portraits-modal .popupSurface,
+  #rsvp-modal .popupSurface {
+    min-height: 0;
+  }
+
+  .clockPopupSurface {
+    padding: 18px 12px 28px;
+  }
+
+  .specialClock {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .specialClockFace {
+    width: min(100%, 380px);
+  }
+
+  .specialClockLabel {
+    min-width: 76px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--label-angle))
+      translateY(-138px)
+      rotate(calc(var(--label-angle) * -1));
+  }
+
+  .specialClockReadout {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .specialClockStatusGrid {
+    width: min(100%, 380px);
+  }
+
+  .meta {
+    gap: 10px;
+  }
+
+  .rsvpFormEmbed {
+    min-height: calc(100vh - 92px);
   }
 }
