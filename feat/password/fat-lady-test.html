@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fat Lady Animation Test</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      padding: 32px;
+      background: #1a0d08;
+      color: #e8d5b5;
+      font-family: Georgia, serif;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      color: #c9993c;
+    }
+
+    .preview-row {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .preview-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .preview-col h2 {
+      font-size: 1rem;
+      font-weight: normal;
+      color: #c9993c;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .frame {
+      position: relative;
+      width: 240px;
+      aspect-ratio: 0.75;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, #8b5e26 0%, #5a3a10 30%, #7a4e1e 60%, #3d2108 100%);
+      box-shadow:
+        0 0 0 4px #2a1505,
+        0 0 0 6px #7a4e1e,
+        0 0 0 10px #2a1505,
+        0 28px 64px rgba(0,0,0,0.6),
+        inset 0 0 12px rgba(0,0,0,0.4);
+    }
+
+    .frame::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 4px;
+      border: 2px solid rgba(201,153,60,0.4);
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+      pointer-events: none;
+    }
+
+    .frame-inner {
+      position: absolute;
+      inset: 14px;
+      border-radius: 4px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 80%, rgba(80,35,10,0.9), rgba(20,8,4,1) 70%);
+    }
+
+    .frame-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .controls label {
+      font-size: 0.85rem;
+      color: #a08060;
+    }
+
+    .controls select {
+      padding: 4px 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      background: #2a1505;
+      color: #e8d5b5;
+      border: 1px solid #7a4e1e;
+      border-radius: 4px;
+    }
+
+    button.cycle-btn {
+      padding: 6px 16px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      background: #5a3a10;
+      color: #e8d5b5;
+      border: 1px solid #7a4e1e;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button.cycle-btn:hover { background: #7a4e1e; }
+
+    .frame-label {
+      font-size: 0.75rem;
+      color: #806040;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fat Lady — Animation Frame Test</h1>
+
+  <div class="controls">
+    <label for="speed">Cycle speed</label>
+    <select id="speed">
+      <option value="800">800 ms</option>
+      <option value="500">500 ms</option>
+      <option value="300" selected>300 ms</option>
+      <option value="150">150 ms</option>
+    </select>
+    <button class="cycle-btn" id="toggleCycle">Start Cycling</button>
+  </div>
+
+  <div class="preview-row">
+    <!-- Neutral -->
+    <div class="preview-col">
+      <h2>Neutral</h2>
+      <div class="frame">
+        <div class="frame-inner">
+          <img id="neutralImg" src="../../assets/fat_lady/fat_lady_neutral_1.png" alt="Neutral" />
+        </div>
+      </div>
+      <span class="frame-label" id="neutralLabel">Frame 1 / 4</span>
+    </div>
+
+    <!-- Happy -->
+    <div class="preview-col">
+      <h2>Happy</h2>
+      <div class="frame">
+        <div class="frame-inner">
+          <img id="happyImg" src="../../assets/fat_lady/fat_lady_happy_1.png" alt="Happy" />
+        </div>
+      </div>
+      <span class="frame-label" id="happyLabel">Frame 1 / 4</span>
+    </div>
+  </div>
+
+  <script>
+    const FRAMES = 4;
+    const neutralImg = document.getElementById('neutralImg');
+    const happyImg   = document.getElementById('happyImg');
+    const neutralLabel = document.getElementById('neutralLabel');
+    const happyLabel   = document.getElementById('happyLabel');
+    const speedSelect  = document.getElementById('speed');
+    const toggleBtn    = document.getElementById('toggleCycle');
+
+    let neutralIdx = 1;
+    let happyIdx   = 1;
+    let timer = null;
+
+    function setFrame(type, idx) {
+      const img   = type === 'neutral' ? neutralImg : happyImg;
+      const label = type === 'neutral' ? neutralLabel : happyLabel;
+      img.src = `../../assets/fat_lady/fat_lady_${type}_${idx}.png`;
+      label.textContent = `Frame ${idx} / ${FRAMES}`;
+    }
+
+    function advance() {
+      neutralIdx = (neutralIdx % FRAMES) + 1;
+      happyIdx   = (happyIdx   % FRAMES) + 1;
+      setFrame('neutral', neutralIdx);
+      setFrame('happy',   happyIdx);
+    }
+
+    function startCycling() {
+      if (timer) return;
+      timer = setInterval(advance, Number(speedSelect.value));
+      toggleBtn.textContent = 'Stop Cycling';
+    }
+
+    function stopCycling() {
+      clearInterval(timer);
+      timer = null;
+      toggleBtn.textContent = 'Start Cycling';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      timer ? stopCycling() : startCycling();
+    });
+
+    speedSelect.addEventListener('change', () => {
+      if (timer) { stopCycling(); startCycling(); }
+    });
+  </script>
+</body>
+</html>
