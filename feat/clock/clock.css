@@ -1,0 +1,230 @@
+/* ══════════════════════════════════════════════════════════
+   clock.css — Weasley clock panel
+══════════════════════════════════════════════════════════ */
+
+.clockPanelSurface {
+  display: grid;
+  place-items: center;
+  padding: clamp(20px, 5vw, 44px);
+  padding-top: 72px;
+}
+
+.specialClock {
+  width: min(100%, 720px);
+  display: grid;
+  grid-template-columns: minmax(280px, 1.05fr) minmax(180px, 0.72fr);
+  gap: clamp(24px, 5vw, 56px);
+  align-items: center;
+}
+
+.specialClockFace {
+  position: relative;
+  width: min(100%, 440px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 1px solid rgba(248, 229, 196, 0.34);
+  background:
+    radial-gradient(circle at center, rgba(255,241,215,0.12), transparent 38%),
+    radial-gradient(circle at center, rgba(248,229,196,0.08), transparent 64%),
+    linear-gradient(180deg, rgba(28,20,15,0.98), rgba(12,8,6,0.98));
+  box-shadow:
+    inset 0 0 0 14px rgba(12,8,6,0.78),
+    inset 0 0 0 15px rgba(248,229,196,0.1),
+    0 28px 80px rgba(0,0,0,0.3);
+}
+
+.specialClockFaceGlow,
+.specialClockCenterRing,
+.specialClockHub { position: absolute; border-radius: 50%; }
+
+.specialClockFaceGlow {
+  inset: 7%;
+  border: 1px solid rgba(248,229,196,0.08);
+  box-shadow: inset 0 0 44px rgba(255,227,168,0.06);
+}
+
+.specialClockCenterRing {
+  top: 50%; left: 50%;
+  width: 84px; height: 84px;
+  border: 1px solid rgba(248,229,196,0.22);
+  background: radial-gradient(circle at center, rgba(52,36,27,0.94), rgba(18,12,9,0.98));
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.specialClockHub {
+  top: 50%; left: 50%;
+  width: 18px; height: 18px;
+  background: radial-gradient(circle at 30% 30%, #fff7eb, #d5b989 64%, #725539 100%);
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.specialClockLabels { position: absolute; inset: 0; }
+
+.specialClockLabel {
+  position: absolute;
+  top: 50%; left: 50%;
+  min-width: 92px;
+  padding: 8px 10px;
+  border: 1px solid rgba(248,229,196,0.08);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: rgba(247,239,226,0.72);
+  background: rgba(20,14,11,0.56);
+  transform:
+    translate(-50%, -50%)
+    rotate(var(--label-angle))
+    translateY(-165px)
+    rotate(calc(var(--label-angle) * -1));
+  transition: color 320ms ease, border-color 320ms ease, background 320ms ease, box-shadow 320ms ease;
+}
+
+.specialClockLabel.is-hw-active {
+  color: #fff3dc;
+  border-color: rgba(248,229,196,0.34);
+  background: rgba(73,52,32,0.42);
+  box-shadow: 0 0 18px rgba(255,219,150,0.14);
+}
+
+.specialClockLabel.is-joel-active {
+  color: #fef5e8;
+  border-color: rgba(191,229,248,0.36);
+  background: rgba(36,50,62,0.42);
+  box-shadow: 0 0 18px rgba(168,218,255,0.14);
+}
+
+.specialClockLabel.is-hw-active.is-joel-active {
+  border-color: rgba(248,229,196,0.46);
+  background: linear-gradient(135deg, rgba(95,64,34,0.42), rgba(36,50,62,0.42));
+  box-shadow: 0 0 20px rgba(255,226,173,0.2);
+}
+
+.specialClockHand {
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 38%;
+  border-radius: 999px;
+  transform-origin: center calc(100% - 10px);
+  transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 4;
+}
+
+.specialClockHand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,247,231,0.96), rgba(185,145,87,0.9));
+  box-shadow: 0 0 12px rgba(255,214,140,0.18);
+}
+
+.specialClockHand::after {
+  content: "";
+  position: absolute;
+  bottom: 2px; left: 50%;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(248,229,196,0.22);
+  background: rgba(23,16,12,0.94);
+  transform: translateX(-50%);
+}
+
+.specialClockHandTip {
+  position: absolute;
+  top: -14px; left: 50%;
+  width: 56px; height: auto;
+  transform: translateX(-50%);
+  transform-origin: center center;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.28));
+}
+
+.specialClockHandHw {
+  left: calc(50% - 6px);
+  transform: translate(-50%, calc(-100% + 10px)) rotate(var(--clock-hand-angle, 0deg));
+}
+
+.specialClockHandJoel {
+  left: calc(50% + 6px);
+  opacity: 0.92;
+  transform: translate(-50%, calc(-100% + 10px)) rotate(var(--clock-hand-angle, 0deg));
+  transition-delay: 80ms;
+}
+
+.specialClockReadout { display: grid; gap: 10px; align-content: center; }
+.specialClockEyebrow, .specialClockNote { margin: 0; }
+
+.specialClockEyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(247,239,226,0.62);
+}
+
+.specialClockStatusGrid { display: grid; gap: 14px; }
+
+.specialClockNoteCard {
+  padding: 16px 16px 14px;
+  border: 1px solid rgba(248,229,196,0.14);
+  background:
+    linear-gradient(180deg, rgba(255,243,219,0.08), rgba(255,243,219,0.02)),
+    rgba(10,7,5,0.42);
+}
+
+.specialClockNoteCardHw   { box-shadow: inset 0 0 0 1px rgba(210,173,116,0.08); }
+.specialClockNoteCardJoel { box-shadow: inset 0 0 0 1px rgba(152,199,232,0.08); }
+
+.specialClockPerson {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(247,239,226,0.62);
+}
+
+.specialClockStatus {
+  margin: 8px 0 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+  line-height: 0.92;
+  color: #fff2da;
+}
+
+.specialClockNoteBox {
+  min-height: 78px;
+  margin-top: 14px;
+  padding: 12px 0 0;
+  border: 0;
+  background: transparent;
+  font-family: "Manrope", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(247,239,226,0.82);
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .specialClock {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .specialClockFace { width: min(100%, 300px); }
+
+  .specialClockLabel {
+    min-width: 76px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--label-angle))
+      translateY(-120px)
+      rotate(calc(var(--label-angle) * -1));
+  }
+}

@@ -1,0 +1,92 @@
+/* ══════════════════════════════════════════════════════════
+   pensieve.css — Pensieve memories panel
+══════════════════════════════════════════════════════════ */
+
+/* ── Pensieve panel surface ──────────────────────────────── */
+.pensievePanelSurface {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 72px 24px 32px;
+  overflow-y: auto;
+}
+
+.pensieveRippleOrigin {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(140, 200, 255, 0.18);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.panel[data-panel="pensieve"]:not([hidden]) .pensieveRippleOrigin {
+  animation: rippleExpand 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes rippleExpand {
+  from { width: 0; height: 0; opacity: 0.8; }
+  to   { width: 200vmax; height: 200vmax; opacity: 0; }
+}
+
+/* Masonry gallery — CSS columns */
+.pensieveGallery {
+  column-count: 3;
+  column-gap: 16px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+@media (max-width: 720px) { .pensieveGallery { column-count: 2; } }
+@media (max-width: 420px) { .pensieveGallery { column-count: 1; } }
+
+/* Photo frames */
+.photoFrame {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  border: 6px solid;
+  border-image: linear-gradient(135deg, #8b5e26, #5a3a10 30%, #7a4e1e 60%, #3d2108 100%) 1;
+  box-shadow:
+    0 0 0 2px #2a1505,
+    0 0 0 4px #7a4e1e,
+    0 0 0 6px #2a1505,
+    0 12px 28px rgba(0,0,0,0.5);
+  position: relative;
+  background: var(--hp-wood);
+}
+
+.photoFrame::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 1px solid rgba(201,153,60,0.3);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.photoFrame img,
+.photoFrame video {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  background: var(--hp-parchment);
+  min-height: 80px;
+}
+
+.photoFrameTall  img,
+.photoFrameTall  video { aspect-ratio: 0.75; object-fit: cover; width: 100%; height: auto; }
+.photoFrameWide  img,
+.photoFrameWide  video { aspect-ratio: 1.5;  object-fit: cover; width: 100%; height: auto; }
+.photoFrameSquare img,
+.photoFrameSquare video { aspect-ratio: 1;   object-fit: cover; width: 100%; height: auto; }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .pensievePanelSurface { padding: 64px 14px 20px; }
+}

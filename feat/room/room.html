@@ -1,0 +1,129 @@
+<!-- feat/room/room.html — Common room scene + interactive items HTML fragment -->
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 2 — Common Room
+════════════════════════════════════════════════ -->
+<section class="roomScreen" data-room-screen aria-label="Common room" hidden>
+  <!-- CSS-art room scene -->
+  <div class="roomScene" aria-hidden="true">
+    <div class="roomWallBack"></div>
+    <div class="roomFloor"></div>
+    <div class="roomWallLeft"></div>
+    <div class="roomWallRight"></div>
+    <!-- Fireplace -->
+    <div class="roomFireplace">
+      <div class="roomFireFlame roomFireFlame1"></div>
+      <div class="roomFireFlame roomFireFlame2"></div>
+      <div class="roomFireFlame roomFireFlame3"></div>
+    </div>
+    <!-- Candle sconces (lit by lumos / nox spell) -->
+    <div class="roomCandle roomCandleLeft" data-candle>
+      <div class="roomCandleStick"></div>
+      <div class="roomCandleFlame"></div>
+      <div class="roomCandleGlow"></div>
+    </div>
+    <div class="roomCandle roomCandleRight" data-candle>
+      <div class="roomCandleStick"></div>
+      <div class="roomCandleFlame"></div>
+      <div class="roomCandleGlow"></div>
+    </div>
+    <!-- Bookshelf -->
+    <div class="roomBookshelf">
+      <div class="roomBook roomBook1"></div>
+      <div class="roomBook roomBook2"></div>
+      <div class="roomBook roomBook3"></div>
+      <div class="roomBook roomBook4"></div>
+      <div class="roomBook roomBook5"></div>
+      <div class="roomBook roomBook6"></div>
+    </div>
+    <!-- Table -->
+    <div class="roomTable"></div>
+  </div>
+
+  <!-- Sprite cursor-follower -->
+  <div class="roomSprite" data-room-sprite aria-hidden="true"></div>
+
+  <!-- Interactive items -->
+  <div class="roomItems">
+    <!-- Pensieve -->
+    <button
+      class="roomItem roomItemPensieve"
+      type="button"
+      data-room-item="pensieve"
+      aria-label="Pensieve — memories"
+    >
+      <div class="roomItemArt pensieveArt" aria-hidden="true">
+        <div class="pensieveBasin">
+          <div class="pensieveLiquid"></div>
+          <div class="pensieveGlow"></div>
+        </div>
+        <div class="pensievePedestal"></div>
+      </div>
+      <span class="roomItemLabel">Pensieve</span>
+    </button>
+
+    <!-- Clock -->
+    <button
+      class="roomItem roomItemClock"
+      type="button"
+      data-room-item="clock"
+      aria-label="The clock"
+    >
+      <div class="roomItemArt clockArt" aria-hidden="true">
+        <div class="wallClockFace">
+          <div class="wallClockHand wallClockHandHour"></div>
+          <div class="wallClockHand wallClockHandMinute"></div>
+          <div class="wallClockCenter"></div>
+        </div>
+        <div class="wallClockBase"></div>
+      </div>
+      <span class="roomItemLabel">Clock</span>
+    </button>
+
+    <!-- Map -->
+    <button
+      class="roomItem roomItemMap"
+      type="button"
+      data-room-item="map"
+      aria-label="Marauder's Map"
+    >
+      <div class="roomItemArt mapArt" aria-hidden="true">
+        <div class="tableMapPaper">
+          <div class="tableMapLines">
+            <div class="tableMapLine"></div>
+            <div class="tableMapLine"></div>
+            <div class="tableMapLine"></div>
+          </div>
+        </div>
+      </div>
+      <span class="roomItemLabel">Map</span>
+    </button>
+
+    <!-- Owl Stand -->
+    <button
+      class="roomItem roomItemOwl"
+      type="button"
+      data-room-item="rsvp"
+      aria-label="Owl stand — RSVP"
+    >
+      <div class="roomItemArt owlArt" aria-hidden="true">
+        <div class="owlBody">
+          <div class="owlHead">
+            <div class="owlEye owlEyeLeft"></div>
+            <div class="owlEye owlEyeRight"></div>
+            <div class="owlBeak"></div>
+          </div>
+          <div class="owlWing owlWingLeft"></div>
+          <div class="owlWing owlWingRight"></div>
+          <div class="owlFeet"></div>
+        </div>
+        <div class="owlStandPole"></div>
+        <div class="owlStandBase"></div>
+      </div>
+      <span class="roomItemLabel">Send a Letter</span>
+    </button>
+  </div>
+
+  <!-- Room blur overlay (activated on item hover) -->
+  <div class="roomBlurOverlay" data-room-blur-overlay aria-hidden="true"></div>
+</section>

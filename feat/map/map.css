@@ -1,0 +1,290 @@
+/* ══════════════════════════════════════════════════════════
+   map.css — Marauder's Map panel
+══════════════════════════════════════════════════════════ */
+
+.replayMapBtn {
+  position: absolute;
+  top: 18px;
+  right: 72px;
+  z-index: 10;
+  pointer-events: auto;
+  border: 1px solid rgba(248,229,196,0.28);
+  padding: 10px 14px;
+  color: var(--hp-ink);
+  font: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(18,12,9,0.58);
+  backdrop-filter: blur(12px);
+  cursor: none;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.replayMapBtn:hover {
+  background: rgba(31,21,16,0.78);
+  border-color: rgba(248,229,196,0.42);
+  transform: translateY(-1px);
+}
+
+.mapPopupSurface {
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  perspective: 2400px;
+  padding-top: 64px;
+  --map-paper-base: #d6bd95;
+  --map-paper-shadow: #bf9962;
+  --map-paper-crease: rgba(111,72,35,0.18);
+  --map-paper-ink: #674221;
+  --map-intro-origin-x: 0px;
+  --map-intro-origin-y: 18vh;
+  --map-intro-origin-scale: 0.28;
+  --map-intro-duration: 1420ms;
+  background: transparent;
+}
+
+.mapIntroStage,
+.mapWritingStage,
+.mapBlankStage {
+  grid-area: 1 / 1;
+  width: 100%;
+  min-height: inherit;
+}
+
+.mapIntroStage,
+.mapWritingStage {
+  display: grid;
+  place-items: center;
+  padding: 22px;
+}
+
+.mapIntroStage {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.mapIntroShell {
+  width: min(100%, 880px);
+  aspect-ratio: 1.68;
+  transform-style: preserve-3d;
+}
+
+.mapPopupSurface.is-map-intro-active .mapIntroShell {
+  animation: mapIntroZoom var(--map-intro-duration) cubic-bezier(0.2, 0.88, 0.24, 1) forwards;
+}
+
+.mapIntroPaper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(91,56,26,0.22);
+  background:
+    radial-gradient(circle at 50% 36%, rgba(255,244,224,0.72), transparent 46%),
+    linear-gradient(180deg, rgba(249,235,209,0.96), rgba(214,189,149,0.98));
+  box-shadow: 0 36px 100px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,245,229,0.24);
+  overflow: hidden;
+}
+
+.mapIntroPaper::before,
+.mapIntroPaper::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(105,67,32,0.26), transparent);
+  opacity: 0.9;
+}
+.mapIntroPaper::before { left: calc(50% - 1px); }
+.mapIntroPaper::after  { left: 50%; }
+
+.mapIntroPaperFace {
+  position: absolute;
+  top: 0; bottom: 0;
+  background:
+    linear-gradient(180deg, rgba(255,245,228,0.74), rgba(215,189,149,0.92)),
+    linear-gradient(90deg, rgba(131,93,57,0.06), transparent 32%, transparent 68%, rgba(131,93,57,0.08));
+}
+
+.mapIntroPaperFaceBase { inset: 0; }
+
+.mapIntroPaperFaceLeft,
+.mapIntroPaperFaceRight {
+  width: 50%;
+  backface-visibility: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255,247,233,0.14);
+}
+
+.mapIntroPaperFaceLeft {
+  left: 0;
+  transform-origin: right center;
+  background:
+    linear-gradient(90deg, rgba(180,140,92,0.22), transparent 22%),
+    linear-gradient(180deg, rgba(246,227,197,0.96), rgba(203,172,129,0.96));
+}
+
+.mapIntroPaperFaceRight {
+  right: 0;
+  transform-origin: left center;
+  background:
+    linear-gradient(270deg, rgba(180,140,92,0.22), transparent 22%),
+    linear-gradient(180deg, rgba(246,227,197,0.96), rgba(203,172,129,0.96));
+}
+
+.mapPopupSurface.is-map-intro-active .mapIntroPaperFaceLeft {
+  animation: mapFoldOpenLeft var(--map-intro-duration) cubic-bezier(0.2, 0.88, 0.24, 1) forwards;
+}
+
+.mapPopupSurface.is-map-intro-active .mapIntroPaperFaceRight {
+  animation: mapFoldOpenRight var(--map-intro-duration) cubic-bezier(0.2, 0.88, 0.24, 1) forwards;
+}
+
+.mapWritingContainer {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  min-height: min(52vw, 520px);
+  padding: clamp(52px, 8vw, 88px) clamp(18px, 4vw, 40px) clamp(28px, 5vw, 42px);
+  border: 1px solid rgba(91,56,26,0.22);
+  background:
+    radial-gradient(circle at 50% 32%, rgba(255,244,224,0.72), transparent 42%),
+    linear-gradient(180deg, rgba(249,235,209,0.98), rgba(214,189,149,0.98));
+  box-shadow: 0 36px 100px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,245,229,0.24);
+}
+
+.mapSpellSvg {
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  overflow: visible;
+}
+
+.mapSpellLineText {
+  --map-fill-opacity: 0;
+  fill: rgba(120,77,37,0.18);
+  fill-opacity: var(--map-fill-opacity);
+  stroke: rgba(102,63,28,0.92);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 44px;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  paint-order: stroke fill;
+  text-anchor: middle;
+  stroke-dasharray: 2400;
+  stroke-dashoffset: 2400;
+}
+
+.mapQuill {
+  position: absolute;
+  top: 0; left: 0;
+  width: 56px;
+  pointer-events: none;
+  transform-origin: 18px 46px;
+  will-change: transform;
+}
+
+.mapBlankStage {
+  display: grid;
+  place-items: center;
+  padding: 22px;
+}
+
+.mapBlankStage[hidden],
+.mapWritingStage[hidden] { display: none; }
+.mapIntroStage[hidden]   { display: none; }
+
+/* Venue map (blank stage contents) */
+.venueMap {
+  position: relative;
+  width: min(100%, 880px);
+  aspect-ratio: 1.68;
+  border: 1px solid rgba(91,56,26,0.22);
+  background:
+    radial-gradient(circle at 50% 32%, rgba(255,244,224,0.72), transparent 42%),
+    linear-gradient(180deg, rgba(249,235,209,0.98), rgba(214,189,149,0.98));
+  box-shadow: 0 36px 100px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,245,229,0.24);
+  overflow: hidden;
+}
+
+.venueMapPlaceholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  font-style: italic;
+  color: rgba(102,63,28,0.7);
+  letter-spacing: 0.08em;
+}
+
+/* Footprints */
+.footprintTrack {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.footprint {
+  position: absolute;
+  width: 10px;
+  height: 16px;
+  border-radius: 50% 50% 40% 40%;
+  background: rgba(102,63,28,0.35);
+  opacity: 0;
+}
+
+.footprint1 { animation: footstep 3s 0.0s ease-in-out infinite; left: 15%; top: 40%; }
+.footprint2 { animation: footstep 3s 0.4s ease-in-out infinite; left: 22%; top: 48%; }
+.footprint3 { animation: footstep 3s 0.8s ease-in-out infinite; left: 30%; top: 44%; }
+.footprint4 { animation: footstep 3s 1.2s ease-in-out infinite; left: 38%; top: 50%; }
+.footprint5 { animation: footstep 3s 1.6s ease-in-out infinite; left: 46%; top: 46%; }
+.footprint6 { animation: footstep 3s 2.0s ease-in-out infinite; left: 54%; top: 52%; }
+
+@keyframes footstep {
+  0%   { opacity: 0; transform: scale(0.7); }
+  15%  { opacity: 0.7; transform: scale(1); }
+  60%  { opacity: 0.5; }
+  100% { opacity: 0; transform: scale(0.9) translateY(4px); }
+}
+
+@keyframes mapIntroZoom {
+  0%   { transform: translate(var(--map-intro-origin-x), var(--map-intro-origin-y)) scale(var(--map-intro-origin-scale)) rotate(-8deg); filter: saturate(0.86) brightness(0.88); }
+  58%  { transform: translate(0, 0) scale(1.03) rotate(0.5deg); filter: saturate(1) brightness(1); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); filter: saturate(1) brightness(1); }
+}
+
+@keyframes mapFoldOpenLeft {
+  0%, 18% { transform: perspective(2200px) rotateY(0deg); box-shadow: inset 0 0 0 1px rgba(255,247,233,0.14); }
+  100%    { transform: perspective(2200px) rotateY(112deg); box-shadow: inset -24px 0 36px rgba(73,44,18,0.24); }
+}
+
+@keyframes mapFoldOpenRight {
+  0%, 18% { transform: perspective(2200px) rotateY(0deg); box-shadow: inset 0 0 0 1px rgba(255,247,233,0.14); }
+  100%    { transform: perspective(2200px) rotateY(-112deg); box-shadow: inset 24px 0 36px rgba(73,44,18,0.24); }
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .mapWritingStage,
+  .mapIntroStage,
+  .mapBlankStage { padding: 18px 14px; }
+
+  .mapWritingContainer {
+    min-height: min(62vw, 420px);
+    padding: 48px 12px 20px;
+  }
+
+  .mapSpellLineText {
+    font-size: 34px;
+    stroke-width: 1.5;
+  }
+}

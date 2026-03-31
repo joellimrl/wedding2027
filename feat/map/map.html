@@ -1,0 +1,61 @@
+<!-- feat/map/map.html — Marauder's Map panel HTML fragment -->
+
+<!-- ── Marauder's Map ── -->
+<div
+  id="map-panel"
+  class="panel"
+  data-panel="map"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Marauder's Map"
+  hidden
+>
+  <button class="replayMapBtn" type="button" data-replay-map>Replay</button>
+  <button class="panelClose" type="button" data-panel-close aria-label="Close map">✕</button>
+  <div class="panelSurface mapPopupSurface" data-map-surface>
+    <div class="mapIntroStage" data-map-intro-stage aria-hidden="true" hidden>
+      <div class="mapIntroShell">
+        <div class="mapIntroPaper">
+          <span class="mapIntroPaperFace mapIntroPaperFaceBase"></span>
+          <span class="mapIntroPaperFace mapIntroPaperFaceLeft"></span>
+          <span class="mapIntroPaperFace mapIntroPaperFaceRight"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mapWritingStage" data-map-writing-stage>
+      <div class="mapWritingContainer">
+        <svg
+          class="mapSpellSvg"
+          viewBox="0 0 760 220"
+          aria-hidden="true"
+          preserveAspectRatio="xMidYMid meet"
+          data-map-spell-svg
+        >
+          <text class="mapSpellLineText" x="380" y="88"  data-map-line-text>I solemnly swear</text>
+          <text class="mapSpellLineText" x="380" y="150" data-map-line-text>I am up to no good</text>
+        </svg>
+        <img class="mapQuill" src="./quill.png" alt="" data-map-quill />
+      </div>
+    </div>
+
+    <div class="mapBlankStage" data-map-blank-stage hidden aria-hidden="true">
+      <div class="venueMap">
+        <div class="venueMapPlaceholder">
+          <p>JW Marriott South Beach</p>
+          <p>Singapore</p>
+          <p>19 June 2027 · 7 PM</p>
+        </div>
+        <!-- Animated footprints -->
+        <div class="footprintTrack" aria-hidden="true">
+          <div class="footprint footprint1"></div>
+          <div class="footprint footprint2"></div>
+          <div class="footprint footprint3"></div>
+          <div class="footprint footprint4"></div>
+          <div class="footprint footprint5"></div>
+          <div class="footprint footprint6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

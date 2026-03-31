@@ -1,0 +1,44 @@
+<!-- feat/pensieve/pensieve.html — Pensieve memories panel HTML fragment -->
+
+<!-- ── Pensieve ── -->
+<div
+  id="pensieve-panel"
+  class="panel"
+  data-panel="pensieve"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Memories — Pensieve"
+  hidden
+>
+  <button class="panelClose" type="button" data-panel-close aria-label="Close pensieve">✕</button>
+  <div class="panelSurface pensievePanelSurface">
+    <div class="pensieveRippleOrigin" data-pensieve-ripple aria-hidden="true"></div>
+    <div class="pensieveGallery" data-pensieve-gallery>
+      <!-- Placeholder frames — replace src with real assets -->
+      <div class="photoFrame photoFrameTall">
+        <img src="./photos/placeholder_1.jpg" alt="Memory 1" loading="lazy" />
+      </div>
+      <div class="photoFrame photoFrameWide">
+        <img src="./photos/placeholder_2.jpg" alt="Memory 2" loading="lazy" />
+      </div>
+      <div class="photoFrame photoFrameSquare">
+        <img src="./photos/placeholder_3.jpg" alt="Memory 3" loading="lazy" />
+      </div>
+      <div class="photoFrame photoFrameTall">
+        <img src="./photos/placeholder_4.jpg" alt="Memory 4" loading="lazy" />
+      </div>
+      <div class="photoFrame photoFrameWide">
+        <video src="./photos/placeholder_5.mp4" muted playsinline loop aria-label="Memory video 5"></video>
+      </div>
+      <div class="photoFrame photoFrameSquare">
+        <img src="./photos/placeholder_6.jpg" alt="Memory 6" loading="lazy" />
+      </div>
+      <div class="photoFrame photoFrameTall">
+        <img src="./photos/placeholder_7.jpg" alt="Memory 7" loading="lazy" />
+      </div>
+      <div class="photoFrame photoFrameWide">
+        <img src="./photos/placeholder_8.jpg" alt="Memory 8" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</div>

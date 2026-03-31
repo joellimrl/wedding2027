@@ -1,0 +1,90 @@
+<!-- feat/rsvp/rsvp.html — First-time owl intro + RSVP panel HTML fragment -->
+
+<!-- ═══════════════════════════════════════════════
+     FIRST-TIME OWL / RSVP INTRO ANIMATION
+     (plays once after door swing, before room is interactive)
+════════════════════════════════════════════════ -->
+<div class="owlIntro" data-owl-intro aria-hidden="true" hidden>
+  <button class="panelClose owlIntroClose" type="button" data-owl-intro-close aria-label="Close">✕</button>
+  <div class="owlIntroOwl" data-owl-intro-owl>
+    <div class="owlBody owlBodyLarge">
+      <div class="owlHead owlHeadLarge">
+        <div class="owlEye owlEyeLeft"></div>
+        <div class="owlEye owlEyeRight"></div>
+        <div class="owlBeak"></div>
+      </div>
+      <div class="owlWing owlWingLeft"></div>
+      <div class="owlWing owlWingRight"></div>
+    </div>
+  </div>
+  <!-- Envelope drop -->
+  <div class="owlIntroEnvelope" data-owl-intro-envelope hidden>
+    <div class="envelopeBody">
+      <div class="envelopeFlapTop" data-envelope-flap></div>
+      <div class="envelopeInner">
+        <div class="envelopeFormWrapper">
+          <iframe
+            class="rsvpFormEmbed"
+            data-tally-src="https://tally.so/embed/Pd07pB?alignLeft=1&hideTitle=1&transparentBackground=1"
+            loading="lazy"
+            width="100%"
+            height="100%"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            title="Joel and Hui Wen RSVP form"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RSVP / Owl Stand panel ── -->
+<div
+  id="rsvp-panel"
+  class="panel"
+  data-panel="rsvp"
+  role="dialog"
+  aria-modal="true"
+  aria-label="RSVP"
+  hidden
+>
+  <button class="panelClose" type="button" data-panel-close aria-label="Close RSVP">✕</button>
+  <div class="panelSurface rsvpPanelSurface">
+    <!-- Owl + envelope animation -->
+    <div class="owlRsvpAnim" data-owl-rsvp-anim aria-hidden="true">
+      <div class="owlRsvpOwl" data-owl-rsvp-owl>
+        <div class="owlBody owlBodyLarge">
+          <div class="owlHead owlHeadLarge">
+            <div class="owlEye owlEyeLeft"></div>
+            <div class="owlEye owlEyeRight"></div>
+            <div class="owlBeak"></div>
+          </div>
+          <div class="owlWing owlWingLeft"></div>
+          <div class="owlWing owlWingRight"></div>
+        </div>
+      </div>
+    </div>
+    <div class="rsvpEnvelopeWrap" data-rsvp-envelope-wrap>
+      <div class="envelopeBody" data-rsvp-envelope>
+        <div class="envelopeFlapTop" data-envelope-flap></div>
+        <div class="envelopeInner">
+          <div class="envelopeFormWrapper">
+            <iframe
+              class="rsvpFormEmbed"
+              data-tally-src="https://tally.so/embed/Pd07pB?alignLeft=1&hideTitle=1&transparentBackground=1"
+              loading="lazy"
+              width="100%"
+              height="100%"
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+              title="Joel and Hui Wen RSVP form"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

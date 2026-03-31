@@ -1,0 +1,55 @@
+<!-- feat/clock/clock.html — Weasley clock panel HTML fragment -->
+
+<!-- ── Weasley Clock ── -->
+<div
+  id="clock-panel"
+  class="panel"
+  data-panel="clock"
+  role="dialog"
+  aria-modal="true"
+  aria-label="The Clock"
+  hidden
+>
+  <button class="panelClose" type="button" data-panel-close aria-label="Close clock">✕</button>
+  <div class="panelSurface clockPanelSurface">
+    <div class="specialClock" data-special-clock data-hw-location="work" data-joel-location="work">
+      <div class="specialClockFace" aria-hidden="true">
+        <span class="specialClockFaceGlow"></span>
+        <span class="specialClockCenterRing"></span>
+        <span class="specialClockHub"></span>
+
+        <div class="specialClockLabels">
+          <span class="specialClockLabel" data-clock-place="work"   style="--label-angle: 0deg">Work</span>
+          <span class="specialClockLabel" data-clock-place="gym"    style="--label-angle: 60deg">Gym</span>
+          <span class="specialClockLabel" data-clock-place="yoga"   style="--label-angle: 120deg">Yoga</span>
+          <span class="specialClockLabel" data-clock-place="toilet" style="--label-angle: 180deg">Toilet</span>
+          <span class="specialClockLabel" data-clock-place="bed"    style="--label-angle: 240deg">Bed</span>
+          <span class="specialClockLabel" data-clock-place="desk"   style="--label-angle: 300deg">Desk</span>
+        </div>
+
+        <span class="specialClockHand specialClockHandHw" data-clock-hand="hw">
+          <img class="specialClockHandTip" src="./clock_hw.png" alt="" />
+        </span>
+        <span class="specialClockHand specialClockHandJoel" data-clock-hand="joel">
+          <img class="specialClockHandTip" src="./clock_joel.png" alt="" />
+        </span>
+      </div>
+
+      <div class="specialClockReadout">
+        <p class="specialClockEyebrow">Where the hands are pointing</p>
+        <div class="specialClockStatusGrid">
+          <section class="specialClockNoteCard specialClockNoteCardHw">
+            <p class="specialClockPerson">Hui Wen</p>
+            <p class="specialClockStatus" data-clock-status="hw">Work</p>
+            <div class="specialClockNoteBox" data-clock-note="hw"></div>
+          </section>
+          <section class="specialClockNoteCard specialClockNoteCardJoel">
+            <p class="specialClockPerson">Joel</p>
+            <p class="specialClockStatus" data-clock-status="joel">Work</p>
+            <div class="specialClockNoteBox" data-clock-note="joel"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

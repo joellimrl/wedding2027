@@ -42,11 +42,14 @@ Four clickable items are placed around the room:
 **Spell easter eggs (keyboard listener always active on landing page):**
 - `lumos` → candle sconces on the room walls light up with a CSS glow animation; the wand cursor emits a soft light halo.
 - `nox` → extinguishes all candles and the cursor light.
-- `wingardiumleviosa` → the Pensieve and Map items on the common room visually levitate upward with a CSS float animation, then drop back down with a thud. (need to increase the spell buffer length)
+- `wingardiumleviosa` → the Pensieve and Map items on the common room visually levitate upward with a CSS float animation, then drop back down with a thud. (need to increase the spell buffer length) (maybe not, might be trademarked)
+- `accio` → Pull something to the cursor (maybe the cat sprite)
+- `avis` → Create a few birds that flap upwards out of screen
 - `incendio` → the fireplace flames grow larger (CSS scale/brightness animation), then settle back after a few seconds.
 - `reducto` → one of the common room chairs explodes apart with a CSS fragment/shake animation.
 - `reparo` → the chair (if blown up) reassembles itself with a reverse fragment animation; sparkle effect plays on completion.
-- `avadakedavra` → intercepted before the final `a`: as the user types `avadakedavr`, Dumbledore appears (CSS-art overlay or pixel sprite) with a scolding dialogue bubble ("I'm afraid I cannot let you do that."). The spell never completes.
+- `avadakedavra` → intercepted before the final `a`: as the user types `avadakedavr`, Dumbledore appears (CSS-art overlay or pixel sprite) with a scolding dialogue bubble ("I'm afraid I cannot let you do that."). The spell never completes. same thing for `imperio` and `crucio`.
+- `obliviate` → clears the cache (on first type it will reveal the spell in spellbook, and create warning that this will reset the entire site). on second use it clears everything and refreshes the page to the fat lady.
 - Implementation: rolling buffer of last ~15 keypresses checked against spell strings. More spells can be added later.
 
 **Spellbook UI:**
