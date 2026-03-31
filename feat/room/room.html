@@ -4,93 +4,99 @@
      SCREEN 2 — Common Room
 ════════════════════════════════════════════════ -->
 <section class="roomScreen" data-room-screen aria-label="Common room" hidden>
-  <!-- Background scene -->
-  <div class="roomScene" aria-hidden="true"></div>
 
-  <!-- Sprite cursor-follower -->
-  <div class="roomSprite" data-room-sprite aria-hidden="true"></div>
+  <!-- Stage — fixed-aspect container sized by JS to match the background PNG.
+       All items, sprite, and blur overlay live inside so their % coordinates
+       are relative to the image, not the viewport. -->
+  <div class="roomStage" data-room-stage>
 
-  <!-- Interactive items -->
-  <div class="roomItems">
-    <!-- Pensieve -->
-    <button
-      class="roomItem roomItemPensieve"
-      type="button"
-      data-room-item="pensieve"
-      aria-label="Pensieve — memories"
-    >
-      <div class="roomItemArt pensieveArt" aria-hidden="true">
-        <div class="pensieveBasin">
-          <div class="pensieveLiquid"></div>
-          <div class="pensieveGlow"></div>
+    <!-- Sprite cursor-follower -->
+    <div class="roomSprite" data-room-sprite aria-hidden="true"></div>
+
+    <!-- Interactive items -->
+    <div class="roomItems">
+      <!-- Pensieve -->
+      <button
+        class="roomItem roomItemPensieve"
+        type="button"
+        data-room-item="pensieve"
+        aria-label="Pensieve — memories"
+      >
+        <div class="roomItemArt pensieveArt" aria-hidden="true">
+          <div class="pensieveBasin">
+            <div class="pensieveLiquid"></div>
+            <div class="pensieveGlow"></div>
+          </div>
+          <div class="pensievePedestal"></div>
         </div>
-        <div class="pensievePedestal"></div>
-      </div>
-      <span class="roomItemLabel">Pensieve</span>
-    </button>
+        <span class="roomItemLabel">Pensieve</span>
+      </button>
 
-    <!-- Clock -->
-    <button
-      class="roomItem roomItemClock"
-      type="button"
-      data-room-item="clock"
-      aria-label="The clock"
-    >
-      <div class="roomItemArt clockArt" aria-hidden="true">
-        <div class="wallClockFace">
-          <div class="wallClockHand wallClockHandHour"></div>
-          <div class="wallClockHand wallClockHandMinute"></div>
-          <div class="wallClockCenter"></div>
+      <!-- Clock -->
+      <button
+        class="roomItem roomItemClock"
+        type="button"
+        data-room-item="clock"
+        aria-label="The clock"
+      >
+        <div class="roomItemArt clockArt" aria-hidden="true">
+          <div class="wallClockFace">
+            <div class="wallClockHand wallClockHandHour"></div>
+            <div class="wallClockHand wallClockHandMinute"></div>
+            <div class="wallClockCenter"></div>
+          </div>
+          <div class="wallClockBase"></div>
         </div>
-        <div class="wallClockBase"></div>
-      </div>
-      <span class="roomItemLabel">Clock</span>
-    </button>
+        <span class="roomItemLabel">Clock</span>
+      </button>
 
-    <!-- Map -->
-    <button
-      class="roomItem roomItemMap"
-      type="button"
-      data-room-item="map"
-      aria-label="Marauder's Map"
-    >
-      <div class="roomItemArt mapArt" aria-hidden="true">
-        <div class="tableMapPaper">
-          <div class="tableMapLines">
-            <div class="tableMapLine"></div>
-            <div class="tableMapLine"></div>
-            <div class="tableMapLine"></div>
+      <!-- Map -->
+      <button
+        class="roomItem roomItemMap"
+        type="button"
+        data-room-item="map"
+        aria-label="Marauder's Map"
+      >
+        <div class="roomItemArt mapArt" aria-hidden="true">
+          <div class="tableMapPaper">
+            <div class="tableMapLines">
+              <div class="tableMapLine"></div>
+              <div class="tableMapLine"></div>
+              <div class="tableMapLine"></div>
+            </div>
           </div>
         </div>
-      </div>
-      <span class="roomItemLabel">Map</span>
-    </button>
+        <span class="roomItemLabel">Map</span>
+      </button>
 
-    <!-- Owl Stand -->
-    <button
-      class="roomItem roomItemOwl"
-      type="button"
-      data-room-item="rsvp"
-      aria-label="Owl stand — RSVP"
-    >
-      <div class="roomItemArt owlArt" aria-hidden="true">
-        <div class="owlBody">
-          <div class="owlHead">
-            <div class="owlEye owlEyeLeft"></div>
-            <div class="owlEye owlEyeRight"></div>
-            <div class="owlBeak"></div>
+      <!-- Owl Stand -->
+      <button
+        class="roomItem roomItemOwl"
+        type="button"
+        data-room-item="rsvp"
+        aria-label="Owl stand — RSVP"
+      >
+        <div class="roomItemArt owlArt" aria-hidden="true">
+          <div class="owlBody">
+            <div class="owlHead">
+              <div class="owlEye owlEyeLeft"></div>
+              <div class="owlEye owlEyeRight"></div>
+              <div class="owlBeak"></div>
+            </div>
+            <div class="owlWing owlWingLeft"></div>
+            <div class="owlWing owlWingRight"></div>
+            <div class="owlFeet"></div>
           </div>
-          <div class="owlWing owlWingLeft"></div>
-          <div class="owlWing owlWingRight"></div>
-          <div class="owlFeet"></div>
+          <div class="owlStandPole"></div>
+          <div class="owlStandBase"></div>
         </div>
-        <div class="owlStandPole"></div>
-        <div class="owlStandBase"></div>
-      </div>
-      <span class="roomItemLabel">Send a Letter</span>
-    </button>
-  </div>
+        <span class="roomItemLabel">Send a Letter</span>
+      </button>
+    </div>
 
-  <!-- Room blur overlay (activated on item hover) -->
-  <div class="roomBlurOverlay" data-room-blur-overlay aria-hidden="true"></div>
+    <!-- Room blur overlay (activated on item hover) -->
+    <div class="roomBlurOverlay" data-room-blur-overlay aria-hidden="true"></div>
+
+  </div><!-- /roomStage -->
+
 </section>

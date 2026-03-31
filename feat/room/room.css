@@ -10,6 +10,10 @@
   inset: 0;
   z-index: 5;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
 }
 
 .roomScreen[hidden] { display: none; }
@@ -29,12 +33,11 @@
   }
 }
 
-/* ── Room scene CSS art ──────────────────────────────────── */
-.roomScene {
+/* ── Room stage — contain-fit wrapper sized by JS ────────── */
+.roomStage {
   position: absolute;
-  inset: 0;
   overflow: hidden;
-  background: #000 url('../../assets/noob_background.png') center center / contain no-repeat;
+  background: #000 url('../../assets/noob_background.png') center center / 100% 100% no-repeat;
 }
 
 /* Back wall */
@@ -262,6 +265,9 @@
 
 .roomItem {
   position: absolute;
+  left: var(--item-x, 50%);
+  top:  var(--item-y, 50%);
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -281,11 +287,18 @@
   outline-offset: 4px;
 }
 
-/* Positions */
-.roomItemPensieve { bottom: 32%; left: 50%; transform: translateX(-50%); }
-.roomItemClock    { top: 12%; left: 16%; }
-.roomItemMap      { bottom: 33%; right: 20%; }
-.roomItemOwl      { top: 18%; right: 16%; }
+/* Positions — percentages relative to the stage (background image).
+   Refine these with room-grid-test.html. */
+/* .roomItemPensieve { --item-x: 50%; --item-y: 65%; }
+.roomItemClock    { --item-x: 16%; --item-y: 15%; }
+.roomItemMap      { --item-x: 77%; --item-y: 64%; }
+.roomItemOwl      { --item-x: 82%; --item-y: 22%; } */
+/* Item positions — paste into room.css */
+.roomItemClock { --item-x: 8.9%; --item-y: 50.7%; }
+.roomItemPensieve { --item-x: 92.0%; --item-y: 76.5%; }
+.roomItemOwl { --item-x: 10.7%; --item-y: 78.2%; }
+.roomItemMap { --item-x: 49.6%; --item-y: 32.4%; }
+
 
 /* Label hidden until hover */
 .roomItemLabel {
@@ -309,11 +322,9 @@
 
 .roomItem.is-highlighted {
   filter: drop-shadow(0 0 14px var(--hp-gold));
-  transform: translateX(var(--item-tx, 0)) scale(1.06);
+  transform: translate(-50%, -50%) scale(1.06);
   z-index: 5;
 }
-
-.roomItemPensieve.is-highlighted { --item-tx: -50%; }
 
 /* ── Pensieve CSS art (room icon) ────────────────────────── */
 .pensieveArt {
@@ -475,10 +486,4 @@
   transform: scaleX(-1);
 }
 
-/* ── Responsive ─────────────────────────────────────────── */
-@media (max-width: 640px) {
-  .roomItemPensieve { bottom: 34%; }
-  .roomItemClock    { top: 15%; left: 6%; }
-  .roomItemMap      { bottom: 35%; right: 8%; }
-  .roomItemOwl      { top: 22%; right: 6%; }
-}
+/* Responsive — stage scales uniformly so no breakpoint overrides needed */
