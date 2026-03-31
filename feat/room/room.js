@@ -32,15 +32,17 @@ let spritePrevTime    = 0;
  * @param {function} opts.onFirstVisit - called ~900ms after room appears (first-time only)
  * @param {function} opts.playBgm
  */
-export function showRoom({ hasSeenFirstRsvp, onFirstVisit, playBgm }) {
+export function showRoom({ hasSeenFirstRsvp, onFirstVisit, playBgm, instant = false }) {
   if (!roomScreen) return;
   roomScreen.hidden = false;
-  roomScreen.classList.add("is-entering");
-  roomScreen.addEventListener(
-    "animationend",
-    () => roomScreen.classList.remove("is-entering"),
-    { once: true }
-  );
+  if (!instant) {
+    roomScreen.classList.add("is-entering");
+    roomScreen.addEventListener(
+      "animationend",
+      () => roomScreen.classList.remove("is-entering"),
+      { once: true }
+    );
+  }
 
   playBgm("room");
 

@@ -63,11 +63,43 @@ body {
   height: 100%;
 }
 
+/* ── Reset button ───────────────────────────────────────── */
+.resetBtn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(201, 153, 60, 0.36);
+  border-radius: 50%;
+  background: rgba(13, 10, 8, 0.78);
+  backdrop-filter: blur(10px);
+  color: var(--hp-gold-light);
+  font-size: 1.25rem;
+  cursor: none;
+  transition: border-color 180ms ease, background 180ms ease, transform 120ms ease;
+}
+
+.resetBtn:hover {
+  border-color: rgba(201, 153, 60, 0.64);
+  background: rgba(30, 20, 10, 0.88);
+  transform: scale(1.08);
+}
+
+.resetBtn:focus-visible {
+  outline: 2px solid var(--hp-gold);
+  outline-offset: 3px;
+}
+
 /* ── Music toggle ───────────────────────────────────────── */
 .musicToggle {
   position: fixed;
   top: 18px;
-  left: 18px;
+  left: 70px;
   z-index: 1000;
   display: flex;
   align-items: center;

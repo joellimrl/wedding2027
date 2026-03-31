@@ -11,13 +11,15 @@
 //   feat/rsvp/rsvp.js         — owl intro + RSVP panel
 //   feat/pensieve/pensieve.js — pensieve panel (CSS-only, stub exported)
 
-import { hasVisited, lsGet, lsSet } from "./feat/shared/storage.js";
+import { hasVisited, lsGet, lsSet, lsRemove,
+         HP_HAS_VISITED_KEY, HP_LOCKOUT_UNTIL_KEY,
+         HP_FIRST_RSVP_SEEN_KEY, HP_MAP_PLAYED_KEY } from "./feat/shared/storage.js";
 import { initPassword, showGateScreen }           from "./feat/password/password.js";
 import { initRoom, showRoom, handleRoomMouseMove, updateSpriteTarget, tickSprite, isRoomVisible } from "./feat/room/room.js";
 import { handleClockPanelOpen, handleClockPanelClose } from "./feat/clock/clock.js";
 import { initMap, handleMapPanelOpen, handleMapPanelClose } from "./feat/map/map.js";
 import { initRsvp, startOwlIntro, closeOwlIntro, handleRsvpPanelOpen } from "./feat/rsvp/rsvp.js";
-import { clearMapPlayed } from "./feat/shared/storage.js";
+
 
 // ══════════════════════════════════════════════════════════
 // Orchestrator-level constants (not owned by any one feature)
@@ -42,6 +44,7 @@ let panelCloseButtons = [];
 
 // Music
 const musicToggle      = document.querySelector("[data-music-toggle]");
+const resetBtn         = document.querySelector("[data-reset]");
 const bgmTracks = {
   room:     document.getElementById("bgm-room"),
   pensieve: document.getElementById("bgm-pensieve"),
@@ -151,7 +154,10 @@ function toggleMusic() {
     const track = bgmTracks[currentBgmKey];
     if (track) { track.pause(); track.currentTime = 0; }
   } else {
-    playBgm(currentBgmKey ?? "room");
+    // Force-play: clear currentBgmKey so playBgm doesn't skip
+    const key = currentBgmKey ?? "room";
+    currentBgmKey = null;
+    playBgm(key);
   }
 }
 
@@ -243,6 +249,27 @@ function renderWandFrame(now) {
 }
 
 // ══════════════════════════════════════════════════════════
+// Reset
+// ══════════════════════════════════════════════════════════
+
+function resetExperience() {
+  // Stop any playing music
+  const track = bgmTracks[currentBgmKey];
+  if (track) { track.pause(); track.currentTime = 0; }
+  currentBgmKey = null;
+
+  // Clear all app state from localStorage
+  lsRemove(HP_HAS_VISITED_KEY);
+  lsRemove(HP_LOCKOUT_UNTIL_KEY);
+  lsRemove(HP_FIRST_RSVP_SEEN_KEY);
+  lsRemove(HP_MAP_PLAYED_KEY);
+  lsRemove(HP_MUSIC_MUTED_KEY);
+
+  // Hard reload to start fresh at the Fat Lady portrait
+  window.location.reload();
+}
+
+// ══════════════════════════════════════════════════════════
 // Spell system
 // ══════════════════════════════════════════════════════════
 
@@ -304,6 +331,7 @@ document.addEventListener("mousemove", (event) => {
   updateSpriteTarget(event.clientX, event.clientY);
 });
 musicToggle?.addEventListener("click", toggleMusic);
+resetBtn?.addEventListener("click", resetExperience);
 window.addEventListener("keydown", handleGlobalKeydown);
 window.addEventListener("resize", resizeWandCanvas);
 
@@ -383,7 +411,7 @@ async function init() {
   window.requestAnimationFrame(renderWandFrame);
 
   if (hasVisited()) {
-    showRoom({ playBgm });
+    showRoom({ playBgm, instant: true });
   } else {
     showGateScreen();
   }

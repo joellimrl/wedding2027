@@ -24,6 +24,41 @@ let doorSwing      = null;
 let passwordAttempts = 0;
 let _onAuthenticated = null;
 
+// Frame animation state
+let _frameTimer = null;
+let _frameIndex = 0;
+
+const NEUTRAL_FRAMES = [
+  "./assets/fat_lady/fat_lady_neutral_1.png",
+  "./assets/fat_lady/fat_lady_neutral_2.png",
+  "./assets/fat_lady/fat_lady_neutral_3.png",
+  "./assets/fat_lady/fat_lady_neutral_4.png",
+];
+
+const HAPPY_FRAMES = [
+  "./assets/fat_lady/fat_lady_happy_1.png",
+  "./assets/fat_lady/fat_lady_happy_2.png",
+  "./assets/fat_lady/fat_lady_happy_3.png",
+  "./assets/fat_lady/fat_lady_happy_4.png",
+];
+
+function startFrameCycle(frames, intervalMs = 800) {
+  stopFrameCycle();
+  _frameIndex = 0;
+  if (fatLadyImg) fatLadyImg.src = frames[0];
+  _frameTimer = setInterval(() => {
+    _frameIndex = (_frameIndex + 1) % frames.length;
+    if (fatLadyImg) fatLadyImg.src = frames[_frameIndex];
+  }, intervalMs);
+}
+
+function stopFrameCycle() {
+  if (_frameTimer !== null) {
+    clearInterval(_frameTimer);
+    _frameTimer = null;
+  }
+}
+
 // ── Typewriter helper ──────────────────────────────────────
 
 function typeText(element, text, speedMs = 42) {
@@ -53,6 +88,8 @@ export function showGateScreen() {
     showLockout();
     return;
   }
+
+  startFrameCycle(NEUTRAL_FRAMES);
 
   typeText(fatLadyText, "Welcome sorcerer, are you ready?").then(() => {
     if (passwordForm) {
@@ -109,11 +146,13 @@ async function handlePasswordSubmit(event) {
   // Correct password
   hidePasswordError();
   markVisited();
+  startFrameCycle(HAPPY_FRAMES);
   await typeText(fatLadyText, "Very well… enter.");
   openDoor();
 }
 
 function openDoor() {
+  stopFrameCycle();
   const portrait = document.querySelector(".fatLadyPortrait");
   if (portrait) portrait.classList.add("is-swinging");
 
@@ -151,10 +190,5 @@ export function initPassword({ onAuthenticated }) {
 
   passwordForm?.addEventListener("submit", handlePasswordSubmit);
 
-  passwordInput?.addEventListener("input", () => {
-    if (!fatLadyImg) return;
-    fatLadyImg.src = passwordInput.value.length === 0
-      ? "./assets/fat_lady_password_clear.jpg"
-      : "./assets/fat_lady_password_ask.jpg";
-  });
+
 }
